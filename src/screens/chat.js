@@ -1,99 +1,83 @@
-import React, {useState, useLayoutEffect} from 'react';
-import {Box, Button, Text, HamburgerIcon, Icon} from 'native-base';
-import {Animated, Platform} from 'react-native';
+import React, {useState} from 'react';
+import {Box, Button} from 'native-base';
+import {Animated} from 'react-native';
 import chatStyle from '../styles/chatStyle';
-import {COLOR} from '../misc/constants';
-// import {Ionicons} from '@expo/vector-icons';
+import {VALUE} from '../misc/constants';
+
+import ChannelSelection from '../components/chanelSelection';
+import CurrentChat from '../components/currentChat';
+import MemberList from '../components/memberList';
 
 const Chat = props => {
   const {navigation, sendbird} = props;
   const [padding, setPadding] = useState(new Animated.Value(0));
   const [currentScreen, setCurrentScreen] = useState(1);
 
+  /** Open the left panel showing the channels */
   const openMenu = () => {
     setCurrentScreen(0);
     Animated.timing(padding, {
-      toValue: 300,
-      duration: 300,
+      toValue: VALUE.chatPanOffset,
+      duration: VALUE.chatPanDuration,
       useNativeDriver: false,
     }).start();
   };
 
+  /** Open the right panel showing the connected members */
   const openOnlineMember = () => {
     setCurrentScreen(2);
     Animated.timing(padding, {
-      toValue: -300,
-      duration: 300,
+      toValue: -VALUE.chatPanOffset,
+      duration: VALUE.chatPanDuration,
       useNativeDriver: false,
     }).start();
   };
 
+  /** Return to the main chat screen */
   const reset = () => {
     Animated.timing(padding, {
       toValue: 0,
-      duration: 300,
+      duration: VALUE.chatPanDuration,
       useNativeDriver: false,
     }).start(() => {
       setCurrentScreen(1);
     });
   };
 
-  const leftBox = (
-    <Box style={[chatStyle.leftBox, {elevation: currentScreen == 0 ? 3 : 1}]} />
+  /** Define the left panel */
+  const channelPanel = (
+    <ChannelSelection isCurrentScreen={currentScreen === 0} />
   );
 
-  const middleBox = (
-    <Animated.View
-      // style={chatStyle.middleBox}
-      style={[chatStyle.middleBox, {marginLeft: padding}]}>
-      <Box style={chatStyle.header}>
-        <Button
-          variant="link"
-          style={chatStyle.headerButton}
-          onPress={openMenu}>
-          <HamburgerIcon color="white" />
-        </Button>
-        <Box style={{flex: 1}} />
-        <Button
-          variant="outline"
-          size="xs"
-          style={chatStyle.headerButton}
-          onPress={openOnlineMember}>
-          <Text color="white">Online (1)</Text>
-        </Button>
-      </Box>
-
-      {currentScreen != 1 ? (
-        <Button
-          onPress={reset}
-          style={{
-            backgroundColor: 'black',
-            opacity: 0.4,
-            height: '100%',
-            width: '100%',
-            position: 'absolute',
-          }}
-        />
-      ) : undefined}
+  /** Define the main chat view */
+  const currentChat = (
+    <Animated.View style={[chatStyle.middleBox, {marginLeft: padding}]}>
+      <CurrentChat
+        openMenu={openMenu}
+        openOnlineMember={openOnlineMember}
+        overlay={
+          currentScreen !== 1 ? (
+            <Button onPress={reset} style={chatStyle.overlay} />
+          ) : undefined
+        }
+      />
     </Animated.View>
   );
 
-  const rightBox = (
-    <Box style={[chatStyle.rightBox, {elevation: currentScreen == 2 ? 3 : 1}]}>
-      <Text>Connected member</Text>
-    </Box>
-  );
+  /** Define the right panel */
+  const memberPanel = <MemberList isCurrentScreen={currentScreen === 2} />;
 
-  const bg = <Box style={chatStyle.background}></Box>;
+  /** Define the background, behind the chat view, and in front of the left or right panel
+   * depending on the selected screen
+   */
+  const bg = <Box style={chatStyle.background} />;
 
   return (
     <Box>
-      <Box style={chatStyle.container}>
-        {bg}
-        {leftBox}
-        {rightBox}
-        {middleBox}
-      </Box>
+      {bg}
+      {channelPanel}
+      {memberPanel}
+      {currentChat}
     </Box>
   );
 };

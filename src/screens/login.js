@@ -55,7 +55,6 @@ const Login = props => {
         sendbird
           .updateCurrentUserInfo(state.nickname, '', (err, response) => {
             if (err) {
-              console.log('nico:', err);
               showError(err.message);
               dispatch({type: 'end-connection'});
               return;
