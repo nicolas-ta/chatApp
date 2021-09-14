@@ -4,15 +4,15 @@ import {Animated} from 'react-native';
 import chatStyle from '../styles/chatStyle';
 import {VALUE} from '../misc/constants';
 
-import ChannelSelection from '../components/chanelSelection';
-import CurrentChat from '../components/currentChat';
-import MemberList from '../components/memberList';
+import {withAppContext} from '../context';
+import ChannelSelection from './chatPanels/channelSelection';
+import CurrentChat from './chatPanels/currentChat';
+import MemberList from './chatPanels/memberList';
 
 const Chat = props => {
-  const {navigation, sendbird} = props;
-  const [padding, setPadding] = useState(new Animated.Value(0));
+  const [padding] = useState(new Animated.Value(0));
+  const {route} = props;
   const [currentScreen, setCurrentScreen] = useState(1);
-
   /** Open the left panel showing the channels */
   const openMenu = () => {
     setCurrentScreen(0);
@@ -46,13 +46,21 @@ const Chat = props => {
 
   /** Define the left panel */
   const channelPanel = (
-    <ChannelSelection isCurrentScreen={currentScreen === 0} />
+    <ChannelSelection
+      {...props}
+      isCurrentScreen={currentScreen === 0}
+      goToChat={newChannel => {
+        reset();
+        route.params.channel = newChannel;
+      }}
+    />
   );
 
   /** Define the main chat view */
   const currentChat = (
     <Animated.View style={[chatStyle.middleBox, {marginLeft: padding}]}>
       <CurrentChat
+        {...props}
         openMenu={openMenu}
         openOnlineMember={openOnlineMember}
         overlay={
@@ -76,10 +84,10 @@ const Chat = props => {
     <Box>
       {bg}
       {channelPanel}
-      {memberPanel}
+      {currentScreen === 0 ? undefined : memberPanel}
       {currentChat}
     </Box>
   );
 };
 
-export default Chat;
+export default withAppContext(Chat);

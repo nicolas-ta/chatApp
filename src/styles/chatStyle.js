@@ -21,6 +21,12 @@ export default StyleSheet.create({
     margin: 10,
     // backgroundColor: COLOR.red,
   },
+  headerName: {
+    color: 'white',
+    fontSize: 24,
+    marginTop: 12,
+    fontWeight: '100',
+  },
   middleBox: {
     display: 'flex',
     elevation: 4,
@@ -53,10 +59,12 @@ export default StyleSheet.create({
     marginTop: 5,
     height: Dimensions.get('window').height - 10,
     position: 'absolute',
-    backgroundColor: COLOR.darkBlue,
+    backgroundColor: COLOR.red,
     borderRadius: 10,
   },
   input: {
+    paddingVertical: 0,
+    textAlignVertical: 'top',
     marginBottom: 10,
     marginLeft: 10,
     color: 'white',

@@ -3,13 +3,14 @@ import React, {useReducer} from 'react';
 import {loginReducer} from '../reducer/login';
 import loginStyle from '../styles/loginStyle';
 import {withAppContext} from '../context';
-import {Animated, Keyboard} from 'react-native';
+import {Animated} from 'react-native';
 import {Heading, Box, Input, Button, Spinner, Text} from 'native-base';
 import {COLOR} from '../misc/constants';
 
 const Login = props => {
-  // const appId = '537DE3CB-FB82-43D2-8CB6-C46CD62394A9';
-  // var sendbird = new SendBird({appId});
+  const CHANNEL_URL =
+    'sendbird_open_channel_20029_336b5fc119f6b2a0edfb5629382bdf63eb9700ca';
+
   const {navigation, sendbird} = props;
   const [state, dispatch] = useReducer(loginReducer, {
     userId: '',
@@ -53,18 +54,17 @@ const Login = props => {
           // Handle error.
         }
         sendbird
-          .updateCurrentUserInfo(state.nickname, '', (err, response) => {
+          .updateCurrentUserInfo(state.nickname, '', (err, currentUser) => {
             if (err) {
               showError(err.message);
               dispatch({type: 'end-connection'});
               return;
               // Handle error.
             }
-            dispatch({type: 'end-connection'});
-            navigation.navigate('Chat', {});
+            enterHomeChannel(currentUser);
           })
-          .catch(error => {
-            showError(error.message);
+          .catch(err => {
+            showError(err.message);
           });
 
         // The user is connected to Sendbird server.
@@ -72,6 +72,28 @@ const Login = props => {
       .catch(error => {
         showError(error.message);
       });
+  };
+
+  const enterHomeChannel = currentUser => {
+    sendbird.OpenChannel.getChannel(CHANNEL_URL, (error, channel) => {
+      if (error) {
+        console.error(error.message);
+        // Handle error.
+      }
+
+      // Call the instance method of the result object in the "openChannel" parameter of the callback function.
+      channel.enter((err, response) => {
+        if (err) {
+          console.error(err.message);
+          // Handle error.
+        }
+        // The current user successfully enters the open channel,
+        // and can chat with other users in the channel by using APIs.
+        dispatch({type: 'end-connection'});
+
+        navigation.navigate('Chat', {currentUser, channel});
+      });
+    });
   };
 
   return (
