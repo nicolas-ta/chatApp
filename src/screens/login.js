@@ -45,14 +45,9 @@ const Login = props => {
       return;
     }
     dispatch({type: 'start-connection'});
-    console.log('nico: login 1');
     sendbird
       .connect(state.nickname, (error, user) => {
-        console.log('nico: login 2');
-
         if (error) {
-          console.log('nico: login 3', error.message);
-
           showError(error.message);
           dispatch({type: 'end-connection'});
           return;

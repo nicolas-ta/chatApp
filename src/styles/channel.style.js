@@ -10,6 +10,7 @@ export default StyleSheet.create({
 
   // Channel
   channelContainer: {
+    height: 75,
     flexDirection: 'row',
     borderRadius: 5,
     backgroundColor: COLOR.darkerBlue,

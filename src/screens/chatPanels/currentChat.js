@@ -126,7 +126,10 @@ const CurrentChat = props => {
   channelHandler.onMessageReceived = (targetChannel, message) => {
     if (targetChannel.url === channel.url) {
       dispatch({type: 'receive-message', payload: {message}});
-      channel.markAsRead();
+      if (channel.channelType === 'group') {
+        console.log('nico: message received, mark as read');
+        channel.markAsRead();
+      }
     }
   };
 

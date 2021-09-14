@@ -44,7 +44,6 @@ export const chatReducer = (state, action) => {
           state.messages[0].sender &&
           message.sender.userId === state.messages[0].sender.userId;
       }
-
       return {
         ...state,
         messages: [message, ...state.messages],
