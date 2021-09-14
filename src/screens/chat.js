@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Box, Button} from 'native-base';
 import {Animated} from 'react-native';
-import chatStyle from '../styles/chatStyle';
+import chatStyle from '../styles/chat.style';
 import {VALUE} from '../misc/constants';
 
 import {withAppContext} from '../context';

@@ -1,7 +1,7 @@
 import React, {useReducer} from 'react';
 
 import {loginReducer} from '../reducer/login';
-import loginStyle from '../styles/loginStyle';
+import loginStyle from '../styles/login.style.js';
 import {withAppContext} from '../context';
 import {Animated} from 'react-native';
 import {Heading, Box, Input, Button, Spinner, Text} from 'native-base';
@@ -45,9 +45,14 @@ const Login = props => {
       return;
     }
     dispatch({type: 'start-connection'});
+    console.log('nico: login 1');
     sendbird
       .connect(state.nickname, (error, user) => {
+        console.log('nico: login 2');
+
         if (error) {
+          console.log('nico: login 3', error.message);
+
           showError(error.message);
           dispatch({type: 'end-connection'});
           return;

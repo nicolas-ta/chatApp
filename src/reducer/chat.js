@@ -3,18 +3,10 @@ export const chatReducer = (state, action) => {
     case 'refresh': {
       return {
         ...state,
-        selectedChannel: undefined,
         messageMap: {},
         messages: [],
         loading: false,
         error: null,
-      };
-    }
-
-    case 'switch-channel': {
-      return {
-        ...state,
-        selectedChannel: action.payload,
       };
     }
     case 'fetch-messages': {
@@ -61,33 +53,32 @@ export const chatReducer = (state, action) => {
         empty: '',
       };
     case 'send-message': {
-      const {message, clearInput} = action.payload || {};
-
-      if (!state.messageMap[message.reqId]) {
+      const {sentMsg, sentClearInput} = action.payload || {};
+      if (!state.messageMap[sentMsg.reqId]) {
         if (state.messages.length > 0) {
-          message.hasSameSenderAbove =
-            message.sender &&
+          sentMsg.hasSameSenderAbove =
+            sentMsg.sender &&
             state.messages[0].sender &&
-            message.sender.userId === state.messages[0].sender.userId;
+            sentMsg.sender.userId === state.messages[0].sender.userId;
         }
 
         return {
           ...state,
-          messages: [message, ...state.messages],
-          messageMap: {...state.messageMap, [message.reqId]: true},
-          input: clearInput ? '' : state.input,
+          messages: [sentMsg, ...state.messages],
+          messageMap: {...state.messageMap, [sentMsg.reqId]: true},
+          input: sentClearInput ? '' : state.input,
           empty: '',
         };
       } else {
         for (let i in state.messages) {
-          if (state.messages[i].reqId === message.reqId) {
+          if (state.messages[i].reqId === sentMsg.reqId) {
             const updatedMessages = [...state.messages];
-            message.hasSameSenderAbove = updatedMessages[i].hasSameSenderAbove;
-            updatedMessages[i] = message;
+            sentMsg.hasSameSenderAbove = updatedMessages[i].hasSameSenderAbove;
+            updatedMessages[i] = sentMsg;
 
             return {
               ...state,
-              input: clearInput ? '' : state.input,
+              input: sentClearInput ? '' : state.input,
               messages: updatedMessages,
             };
           }

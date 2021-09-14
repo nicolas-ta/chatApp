@@ -18,7 +18,7 @@ import {
   Flex,
 } from 'native-base';
 import {Platform, AppState} from 'react-native';
-import chatStyle from '../../styles/chatStyle';
+import chatStyle from '../../styles/chat.style';
 import {COLOR} from '../../misc/constants';
 import {chatReducer} from '../../reducer/chat';
 import Message from '../../components/message';
@@ -39,11 +39,11 @@ const CurrentChat = props => {
     error: '',
   });
 
-  // on state change
+  /** Is refreshed whenever the userID change */
   useEffect(() => {
     sendbird.addConnectionHandler('chat', connectionHandler);
     sendbird.addChannelHandler('chat', channelHandler);
-    AppState.addEventListener('change', handleStateChange);
+    const event = AppState.addEventListener('change', handleStateChange);
 
     if (!sendbird.currentUser) {
       sendbird.connect(currentUser.userId, (err, _) => {
@@ -65,7 +65,7 @@ const CurrentChat = props => {
     return () => {
       sendbird.removeConnectionHandler('chat');
       sendbird.removeChannelHandler('chat');
-      AppState.removeEventListener('change', handleStateChange);
+      event.remove();
     };
   }, [
     channelHandler,
@@ -177,7 +177,7 @@ const CurrentChat = props => {
 
       const pendingMessage = channel.sendUserMessage(params, (err, message) => {
         if (!err) {
-          dispatch({type: 'send-message', payload: {message}});
+          dispatch({type: 'send-message', payload: {sentMsg: message}});
         } else {
           setTimeout(() => {
             dispatch({
@@ -193,7 +193,7 @@ const CurrentChat = props => {
       });
       dispatch({
         type: 'send-message',
-        payload: {message: pendingMessage, clearInput: true},
+        payload: {sentMsg: pendingMessage, sentClearInput: true},
       });
     }
   };
@@ -234,6 +234,7 @@ const CurrentChat = props => {
       style={chatStyle.input}
       InputRightElement={
         <Button
+          disabled={state.loading || state.input.length === 0}
           ml={0}
           style={chatStyle.sendButton}
           onPress={sendUserMessage}
@@ -257,20 +258,17 @@ const CurrentChat = props => {
         <Message {...props} key={item.reqId} channel={channel} message={item} />
       )}
       keyExtractor={item => `${item.messageId}` || item.reqId}
-      contentContainerStyle={{
-        padding: 0,
-        flexGrow: 1,
-      }}
+      contentContainerStyle={chatStyle.contentContainer}
       ListHeaderComponent={
         state.error && (
-          <Box style={style.errorContainer}>
-            <Text style={style.error}>{state.error}</Text>
+          <Box style={chatStyle.errorContainer}>
+            <Text style={chatStyle.error}>{state.error}</Text>
           </Box>
         )
       }
       ListEmptyComponent={
-        <Box style={style.emptyContainer}>
-          <Text style={style.empty}>{state.empty}</Text>
+        <Box style={chatStyle.emptyContainer}>
+          <Text style={chatStyle.empty}>{state.empty}</Text>
         </Box>
       }
       onEndReached={() => next()}
@@ -296,54 +294,6 @@ const CurrentChat = props => {
       {props.overlay}
     </KeyboardAvoidingView>
   );
-};
-
-const style = {
-  container: {
-    flex: 1,
-  },
-  headerRightContainer: {
-    flexDirection: 'row',
-  },
-  headerRightButton: {
-    marginRight: 10,
-  },
-  errorContainer: {
-    backgroundColor: '#333',
-    opacity: 0.8,
-    padding: 10,
-  },
-  error: {
-    color: '#fff',
-  },
-  emptyContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  empty: {
-    fontSize: 24,
-    color: '#999',
-    alignSelf: 'center',
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    backgroundColor: '#fff',
-    paddingVertical: 4,
-    paddingHorizontal: 10,
-    alignItems: 'center',
-  },
-  input: {
-    flex: 1,
-    fontSize: 20,
-    color: '#555',
-  },
-  uploadButton: {
-    marginRight: 10,
-  },
-  sendButton: {
-    marginLeft: 10,
-  },
 };
 
 export default withAppContext(CurrentChat);

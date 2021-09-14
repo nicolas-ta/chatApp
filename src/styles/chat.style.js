@@ -9,41 +9,6 @@ export default StyleSheet.create({
     elevation: 2,
     position: 'absolute',
   },
-  header: {
-    borderRadius: 10,
-    height: 70,
-    backgroundColor: COLOR.darkerBlue,
-    opacity: 1,
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  headerButton: {
-    margin: 10,
-    // backgroundColor: COLOR.red,
-  },
-  headerName: {
-    color: 'white',
-    fontSize: 24,
-    marginTop: 12,
-    fontWeight: '100',
-  },
-  middleBox: {
-    display: 'flex',
-    elevation: 4,
-    // marginLeft: '-90%',
-    borderRadius: 10,
-    margin: 5,
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height - 10,
-    backgroundColor: COLOR.darkBlue,
-  },
-  overlay: {
-    backgroundColor: 'black',
-    opacity: 0.5,
-    height: '100%',
-    width: '100%',
-    position: 'absolute',
-  },
   leftBox: {
     marginRight: Dimensions.get('window').width - 295,
     width: 295,
@@ -62,6 +27,42 @@ export default StyleSheet.create({
     backgroundColor: COLOR.red,
     borderRadius: 10,
   },
+
+  // Current Chat
+  header: {
+    borderRadius: 10,
+    height: 70,
+    backgroundColor: COLOR.darkerBlue,
+    opacity: 1,
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  headerButton: {
+    margin: 10,
+  },
+  headerName: {
+    color: 'white',
+    fontSize: 24,
+    marginTop: 12,
+    fontWeight: '100',
+  },
+  middleBox: {
+    display: 'flex',
+    elevation: 4,
+    borderRadius: 10,
+    margin: 5,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height - 10,
+    backgroundColor: COLOR.darkBlue,
+  },
+  overlay: {
+    backgroundColor: 'black',
+    opacity: 0.5,
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+  },
+
   input: {
     paddingVertical: 0,
     textAlignVertical: 'top',
@@ -76,5 +77,27 @@ export default StyleSheet.create({
     marginRight: 10,
     marginBottom: 10,
     backgroundColor: COLOR.red,
+  },
+  errorContainer: {
+    backgroundColor: '#333',
+    opacity: 0.8,
+    padding: 10,
+  },
+  error: {
+    color: '#fff',
+  },
+  contentContainer: {
+    padding: 0,
+    flexGrow: 1,
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  empty: {
+    fontSize: 24,
+    color: '#999',
+    alignSelf: 'center',
   },
 });
