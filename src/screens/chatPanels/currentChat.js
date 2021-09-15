@@ -23,6 +23,7 @@ import {COLOR} from '../../misc/constants';
 import {chatReducer} from '../../reducer/chat';
 import Message from '../../components/message';
 import {withAppContext} from '../../context';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const CurrentChat = props => {
   const {route, sendbird} = props;
@@ -107,7 +108,9 @@ const CurrentChat = props => {
         error: '',
       },
     });
-    refresh();
+    if (props.isCurrentScreen) {
+      refresh();
+    }
   };
   connectionHandler.onReconnectFailed = () => {
     dispatch({
@@ -127,7 +130,6 @@ const CurrentChat = props => {
     if (targetChannel.url === channel.url) {
       dispatch({type: 'receive-message', payload: {message}});
       if (channel.channelType === 'group') {
-        console.log('nico: message received, mark as read');
         channel.markAsRead();
       }
     }
@@ -216,7 +218,7 @@ const CurrentChat = props => {
         size="xs"
         style={chatStyle.headerButton}
         onPress={props.openOnlineMember}>
-        <Text color={COLOR.red}>User</Text>
+        <Icon name="people" color={COLOR.red} size={35} />
       </Button>
     </Box>
   );

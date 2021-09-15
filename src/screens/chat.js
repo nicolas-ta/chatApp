@@ -60,6 +60,7 @@ const Chat = props => {
   const currentChat = (
     <Animated.View style={[chatStyle.middleBox, {marginLeft: padding}]}>
       <CurrentChat
+        isCurrentScreen={currentScreen === 1}
         {...props}
         openMenu={openMenu}
         openOnlineMember={openOnlineMember}
@@ -73,7 +74,9 @@ const Chat = props => {
   );
 
   /** Define the right panel */
-  const memberPanel = <MemberList isCurrentScreen={currentScreen === 2} />;
+  const memberPanel = (
+    <MemberList {...props} isCurrentScreen={currentScreen === 2} />
+  );
 
   /** Define the background, behind the chat view, and in front of the left or right panel
    * depending on the selected screen
@@ -84,7 +87,7 @@ const Chat = props => {
     <Box>
       {bg}
       {channelPanel}
-      {currentScreen === 0 ? undefined : memberPanel}
+      {currentScreen === 2 ? memberPanel : undefined}
       {currentChat}
     </Box>
   );

@@ -86,6 +86,7 @@ const Channel = props => {
   }, [channel, channelHandler, sendbird]);
   return (
     <TouchableOpacity
+      activeOpacity={0.8}
       style={channelStyle.channelContainer}
       onPress={() => onPress(channel)}>
       <Image

@@ -24,7 +24,7 @@ const UserMessage = props => {
 
   return (
     <TouchableOpacity
-      activeOpacity={0.75}
+      activeOpacity={1}
       style={{
         ...style.container,
         flexDirection: isMyMessage ? 'row-reverse' : 'row',

@@ -97,7 +97,9 @@ const ChannelSelection = props => {
   };
   connectionHandler.onReconnectSucceeded = () => {
     dispatch({type: 'error', payload: {error: null}});
-    refresh();
+    if (props.isCurrentScreen) {
+      refresh();
+    }
   };
   connectionHandler.onReconnectFailed = () => {
     dispatch({

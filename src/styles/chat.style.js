@@ -24,7 +24,7 @@ export default StyleSheet.create({
     marginTop: 5,
     height: Dimensions.get('window').height - 10,
     position: 'absolute',
-    backgroundColor: COLOR.red,
+    backgroundColor: COLOR.darkBlue,
     borderRadius: 10,
   },
 
