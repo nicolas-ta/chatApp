@@ -3,7 +3,7 @@ import {Text, Box, Badge} from 'native-base';
 import {ColorPropType, Image, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const noImage = require('../asset/no-avatar.png');
+const noImage = require('../assets/no-avatar.png');
 
 import {withAppContext} from '../context';
 import {COLOR} from '../misc/constants';

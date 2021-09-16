@@ -93,7 +93,7 @@ const Channel = props => {
         source={
           channel.coverUrl
             ? {uri: channel.coverUrl}
-            : require('../asset/logo-icon-purple.png')
+            : require('../assets/logo-icon-purple.png')
         }
         style={channelStyle.profileImage}
       />

@@ -7,7 +7,7 @@ import moment from 'moment';
 import {withAppContext} from '../context';
 import {COLOR} from '../misc/constants';
 
-const noImage = require('../asset/no-avatar.png');
+const noImage = require('../assets/no-avatar.png');
 
 const UserMessage = props => {
   const {sendbird, message} = props;

@@ -6,10 +6,9 @@ import {withAppContext} from '../context';
 import {Animated} from 'react-native';
 import {Heading, Box, Input, Button, Spinner, Text} from 'native-base';
 import {COLOR} from '../misc/constants';
+import {HOME_CHANNEL_URL} from '../misc/config';
 
 const Login = props => {
-  const CHANNEL_URL =
-    'sendbird_open_channel_20029_336b5fc119f6b2a0edfb5629382bdf63eb9700ca';
 
   const {navigation, sendbird} = props;
   const [state, dispatch] = useReducer(loginReducer, {
@@ -74,7 +73,7 @@ const Login = props => {
   };
 
   const enterHomeChannel = currentUser => {
-    sendbird.OpenChannel.getChannel(CHANNEL_URL, (error, channel) => {
+    sendbird.OpenChannel.getChannel(HOME_CHANNEL_URL, (error, channel) => {
       if (error) {
         showError(error.message);
       }
