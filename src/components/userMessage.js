@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Spacer, Spinner} from 'native-base';
 import {Text, Image, TouchableOpacity, View} from 'react-native';
 import moment from 'moment';
@@ -12,6 +12,7 @@ const noImage = require('../asset/no-avatar.png');
 const UserMessage = props => {
   const {sendbird, message} = props;
   const isMyMessage = message.sender.userId === sendbird.currentUser.userId;
+  const [showDate, setShowDate] = useState(false);
 
   useEffect(() => {
     const channelHandler = new sendbird.ChannelHandler();
@@ -25,6 +26,7 @@ const UserMessage = props => {
   return (
     <TouchableOpacity
       activeOpacity={1}
+      onPress={() => setShowDate(!showDate)}
       style={{
         ...style.container,
         flexDirection: isMyMessage ? 'row-reverse' : 'row',
@@ -68,9 +70,11 @@ const UserMessage = props => {
                 ...style.updatedAt,
                 color: isMyMessage ? COLOR.darkBlue : '#999',
               }}>
-              {moment(message.createdAt).fromNow() === 'in a few seconds'
-                ? 'Now'
-                : moment(message.createdAt).fromNow()}
+              {showDate
+                ? moment(message.createdAt).fromNow() === 'in a few seconds'
+                  ? 'Now'
+                  : moment(message.createdAt).fromNow()
+                : ''}
             </Text>
           </Text>
         </View>
@@ -85,7 +89,7 @@ const UserMessage = props => {
             size={10}
             indeterminate={true}
             indeterminateAnimationDuration={800}
-            color="#fff"
+            color={COLOR.yellow}
           />
         )}
       </View>

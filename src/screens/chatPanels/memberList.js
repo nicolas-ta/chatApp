@@ -1,12 +1,20 @@
-import React, {useEffect, useReducer, useMemo, useCallback} from 'react';
-import {Box, Text, FlatList} from 'native-base';
+import React, {
+  useEffect,
+  useState,
+  useReducer,
+  useMemo,
+  useCallback,
+} from 'react';
+import {Box, Text, FlatList, Button} from 'native-base';
 import {AppState, SafeAreaView, RefreshControl} from 'react-native';
 import {withAppContext} from '../../context';
 import {memberReducer} from '../../reducer/member';
 import User from '../../components/user';
 import chatStyle from '../../styles/chat.style';
 import memberStyle from '../../styles/member.style';
+import InviteModal from '../../components/inviteModal';
 import {COLOR} from '../../misc/constants';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const MemberList = props => {
   const {route, navigation, sendbird} = props;
@@ -17,6 +25,8 @@ const MemberList = props => {
     loading: false,
     error: '',
   });
+  const [showInviteModal, setShowInviteModal] = useState(false);
+
   // on state change
   useEffect(() => {
     sendbird.addConnectionHandler('member', connectionHandler);
@@ -66,7 +76,6 @@ const MemberList = props => {
   );
 
   connectionHandler.onReconnectStarted = () => {
-    console.log('nico: onReconnectStarted');
     dispatch({
       type: 'error',
       payload: {
@@ -75,7 +84,6 @@ const MemberList = props => {
     });
   };
   connectionHandler.onReconnectSucceeded = () => {
-    console.log('nico: onReconnectSucceeded');
     dispatch({
       type: 'error',
       payload: {
@@ -137,17 +145,19 @@ const MemberList = props => {
         dispatch({type: 'end-loading'});
         if (error) {
           // Handle error.
-          console.log('nico: error :', error.message);
-          return;
+          dispatch({
+            type: 'error',
+            payload: {
+              error: 'Connection failed. Please check the network status.',
+            },
+          });
+        } else {
+          dispatch({type: 'refresh', payload: {members: participantList}});
         }
-        console.log('nico: participantList:', participantList);
-
-        dispatch({type: 'refresh', payload: {members: participantList}});
       });
     } else {
       dispatch({type: 'end-loading'});
-      console.log('nico: channel.members:', channel.members),
-        dispatch({type: 'refresh', payload: {members: channel.members}});
+      dispatch({type: 'refresh', payload: {members: channel.members}});
     }
   }, [channel]);
 
@@ -181,6 +191,28 @@ const MemberList = props => {
             )
           }
         />
+        {channel.channelType === 'group' ? (
+          <Box>
+            <Button
+              onPress={() => setShowInviteModal(true)}
+              backgroundColor={COLOR.blue}
+              style={memberStyle.newButton}
+              startIcon={
+                <Icon name="person-add" color={'white'} size={24} F />
+              }>
+              Invite members
+            </Button>
+            <InviteModal
+              {...props}
+              title="Invite members"
+              sendbird={sendbird}
+              empty="No one to invite"
+              showModal={showInviteModal}
+              isCreating={false}
+              onClose={() => setShowInviteModal(false)}
+            />
+          </Box>
+        ) : undefined}
       </SafeAreaView>
     </Box>
   );

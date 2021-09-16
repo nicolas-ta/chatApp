@@ -8,4 +8,9 @@ export default StyleSheet.create({
     alignSelf: 'center',
     margin: 10,
   },
+  newButton: {
+    margin: 5,
+    borderRadius: 5,
+    marginBottom: 10,
+  },
 });

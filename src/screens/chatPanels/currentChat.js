@@ -150,8 +150,11 @@ const CurrentChat = props => {
     if (channel.channelType === 'group') {
       channel.markAsRead();
     }
-    setQuery(channel.createPreviousMessageListQuery());
-    dispatch({type: 'refresh'});
+    console.log('nico POURQUOI CA REFRESH');
+    if (channel) {
+      setQuery(channel.createPreviousMessageListQuery());
+      dispatch({type: 'refresh'});
+    }
   }, [channel]);
 
   const next = useCallback(() => {

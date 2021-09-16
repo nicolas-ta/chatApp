@@ -5,23 +5,27 @@ import React, {
   useCallback,
   useMemo,
 } from 'react';
-import {Box, Button, Spacer} from 'native-base';
+import {Box, Button, Spacer, Modal, Text, FlatList} from 'native-base';
 import chatStyle from '../../styles/chat.style';
 import {channelsReducer} from '../../reducer/channels';
 import ChannelList from '../../components/channelList';
 import {AppState, SafeAreaView} from 'react-native';
 import {COLOR} from '../../misc/constants';
 import channelStyle from '../../styles/channel.style';
+import InviteModal from '../../components/inviteModal';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const ChannelSelection = props => {
   const {route, sendbird} = props;
-  const {currentUser} = route.params;
+  const {currentUser, channel} = route.params;
   const [queryGroupChannel, setQuery] = useState(null);
   const [queryOpenChannel, setQueryOpenChannel] = useState(null);
+  const [showInviteModal, setShowInviteModal] = useState(false);
 
   const [state, dispatch] = useReducer(channelsReducer, {
     sendbird,
     currentUser,
+    userList: [],
     channels: [],
     channelMap: {},
     openChannels: [],
@@ -97,7 +101,7 @@ const ChannelSelection = props => {
   };
   connectionHandler.onReconnectSucceeded = () => {
     dispatch({type: 'error', payload: {error: null}});
-    if (props.isCurrentScreen) {
+    if (props.isCurrentScreen && !showInviteModal) {
       refresh();
     }
   };
@@ -205,6 +209,13 @@ const ChannelSelection = props => {
     }
   }, [queryOpenChannel]);
 
+  const invitationDone = newChan => {
+    setShowInviteModal(false);
+    if (newChan) {
+      switchChannel(newChan);
+    }
+  };
+
   return (
     <Box
       // eslint-disable-next-line react-native/no-inline-styles
@@ -216,7 +227,7 @@ const ChannelSelection = props => {
           loading={state.loading}
           refresh={refresh}
           error={state.error}
-          empty={state.empty}
+          empty={'No public channel'}
           next={fetchOpenChannel}
           switchChannel={switchChannel}
         />
@@ -226,14 +237,27 @@ const ChannelSelection = props => {
           loading={state.loading}
           refresh={refresh}
           error={state.error}
-          empty={state.empty}
+          empty={'No private channel'}
           next={fetchGroupChannels}
           switchChannel={channel => switchChannel(channel)}
         />
         <Spacer />
-        <Button backgroundColor={COLOR.blue} style={channelStyle.newButton}>
-          New conversation
+        <Button
+          onPress={() => setShowInviteModal(true)}
+          backgroundColor={COLOR.blue}
+          style={channelStyle.newButton}
+          startIcon={<Icon name="add" color={'white'} size={24} />}>
+          Create private channel
         </Button>
+        <InviteModal
+          {...props}
+          title="Invite members"
+          sendbird={sendbird}
+          empty="No one to invite"
+          showModal={showInviteModal}
+          isCreating={true}
+          onClose={newChan => invitationDone(newChan)}
+        />
       </SafeAreaView>
     </Box>
   );

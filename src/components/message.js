@@ -1,6 +1,5 @@
 import React from 'react';
 import {withAppContext} from '../context';
-
 import UserMessage from './userMessage';
 import AdminMessage from './adminMessage';
 

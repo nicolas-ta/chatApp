@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Text, Box, Badge} from 'native-base';
-import {Image, TouchableOpacity} from 'react-native';
+import {ColorPropType, Image, TouchableOpacity} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const noImage = require('../asset/no-avatar.png');
 
@@ -19,14 +20,19 @@ const User = props => {
   return (
     <TouchableOpacity
       activeOpacity={1}
-      style={style.container}
-      endIcon={<Badge>10</Badge>}
+      style={{
+        ...style.container,
+        backgroundColor: selected ? COLOR.blue : undefined,
+      }}
       onPress={() => onPress()}>
       <Box style={style.profileImageContainer}>
         <Image
           source={user.profileUrl !== '' ? {uri: user.profileUrl} : noImage}
           style={style.profileImage}
         />
+        {selected && (
+          <Icon name="done" color={COLOR.blue} size={40} style={style.check} />
+        )}
         {user.connectionStatus === 'online' && <Box style={style.badge} />}
       </Box>
       <Text style={style.nickname}>{user.nickname || '(Unnamed)'}</Text>
@@ -38,9 +44,11 @@ const style = {
   container: {
     flexDirection: 'row',
     paddingHorizontal: 20,
+    marginRight: 20,
     paddingTop: 15,
     paddingBottom: 8,
     alignItems: 'center',
+    // borderRadius: 10,
   },
   profileImageContainer: {
     position: 'relative',

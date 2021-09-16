@@ -15,7 +15,6 @@ import Chat from './src/screens/chat';
 import SendBird from 'sendbird';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const appId = '537DE3CB-FB82-43D2-8CB6-C46CD62394A9';
 const sendbird = new SendBird({appId});

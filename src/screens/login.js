@@ -23,6 +23,10 @@ const Login = props => {
   const showErrorDuration = 3500;
 
   const fade = new Animated.Value(0);
+
+  /** Show error and stop connection
+   * @param message the message describing the error
+   */
   const showError = message => {
     dispatch({type: 'error', payload: {error: message}});
     Animated.sequence([
@@ -38,6 +42,25 @@ const Login = props => {
         useNativeDriver: true,
       }),
     ]).start();
+    dispatch({type: 'end-connection'});
+  };
+
+  const handleLogin = (error, user) => {
+    if (error) {
+      showError(error.message);
+      return;
+    }
+    sendbird
+      .updateCurrentUserInfo(state.nickname, '', (err, currentUser) => {
+        if (err) {
+          showError(err.message);
+          return;
+        }
+        enterHomeChannel(currentUser);
+      })
+      .catch(err => {
+        showError(err.message);
+      });
   };
 
   const login = () => {
@@ -45,47 +68,21 @@ const Login = props => {
       return;
     }
     dispatch({type: 'start-connection'});
-    sendbird
-      .connect(state.nickname, (error, user) => {
-        if (error) {
-          showError(error.message);
-          dispatch({type: 'end-connection'});
-          return;
-          // Handle error.
-        }
-        sendbird
-          .updateCurrentUserInfo(state.nickname, '', (err, currentUser) => {
-            if (err) {
-              showError(err.message);
-              dispatch({type: 'end-connection'});
-              return;
-              // Handle error.
-            }
-            enterHomeChannel(currentUser);
-          })
-          .catch(err => {
-            showError(err.message);
-          });
-
-        // The user is connected to Sendbird server.
-      })
-      .catch(error => {
-        showError(error.message);
-      });
+    sendbird.connect(state.nickname, handleLogin).catch(error => {
+      showError(error.message);
+    });
   };
 
   const enterHomeChannel = currentUser => {
     sendbird.OpenChannel.getChannel(CHANNEL_URL, (error, channel) => {
       if (error) {
-        console.error(error.message);
-        // Handle error.
+        showError(error.message);
       }
 
       // Call the instance method of the result object in the "openChannel" parameter of the callback function.
       channel.enter((err, response) => {
         if (err) {
-          console.error(err.message);
-          // Handle error.
+          showError(err.message);
         }
         // The current user successfully enters the open channel,
         // and can chat with other users in the channel by using APIs.

@@ -74,7 +74,8 @@ export default StyleSheet.create({
   },
   channelListContentContainer: {flexGrow: 1},
   errorContainer: {
-    backgroundColor: '#333',
+    backgroundColor: COLOR.red,
+    color: 'white',
     opacity: 0.8,
     padding: 10,
   },

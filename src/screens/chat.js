@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Box, Button} from 'native-base';
-import {Animated} from 'react-native';
+import {Animated, Keyboard} from 'react-native';
 import chatStyle from '../styles/chat.style';
 import {VALUE} from '../misc/constants';
 
@@ -15,6 +15,7 @@ const Chat = props => {
   const [currentScreen, setCurrentScreen] = useState(1);
   /** Open the left panel showing the channels */
   const openMenu = () => {
+    Keyboard.dismiss();
     setCurrentScreen(0);
     Animated.timing(padding, {
       toValue: VALUE.chatPanOffset,
@@ -25,6 +26,7 @@ const Chat = props => {
 
   /** Open the right panel showing the connected members */
   const openOnlineMember = () => {
+    Keyboard.dismiss();
     setCurrentScreen(2);
     Animated.timing(padding, {
       toValue: -VALUE.chatPanOffset,
