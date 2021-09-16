@@ -7,13 +7,11 @@ import React, {
 } from 'react';
 import {Box, Text, FlatList, Button} from 'native-base';
 import {AppState, SafeAreaView, RefreshControl} from 'react-native';
-import {withAppContext} from '../../context';
-import {memberReducer} from '../../reducer/member';
-import User from '../../components/user';
-import chatStyle from '../../styles/chat.style';
-import memberStyle from '../../styles/member.style';
-import InviteModal from '../../components/inviteModal';
-import {COLOR} from '../../misc/constants';
+import {withAppContext} from '@src/context';
+import {memberReducer} from '@reducers';
+import {User, InviteModal} from '@components';
+import {chatStyle, memberStyle} from '@styles';
+import {COLOR} from '@constants';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const MemberList = props => {

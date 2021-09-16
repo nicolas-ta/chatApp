@@ -1,16 +1,14 @@
 import React, {useEffect, useState, useMemo} from 'react';
 import {Box, Text} from 'native-base';
 import {Image, TouchableOpacity} from 'react-native';
-// import {} from 'react-native-gesture-handler';
 import moment from 'moment';
-import channelStyle from '../styles/channel.style';
-
-import {withAppContext} from '../context';
+import {channelStyle} from '@styles';
+import {withAppContext} from '@src/context';
 import {
   createChannelName,
   createUnreadMessageCount,
   ellipsis,
-} from '../misc/utils';
+} from '@misc/utils';
 
 const LAST_MESSAGE_ELLIPSIS = 23;
 

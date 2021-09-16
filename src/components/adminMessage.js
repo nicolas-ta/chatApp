@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 
-import {withAppContext} from '../context';
+import {withAppContext} from '@src/context';
 
 const AdminMessage = props => {
   const {message} = props;

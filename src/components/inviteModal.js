@@ -1,18 +1,10 @@
-import React, {
-  useEffect,
-  useState,
-  useReducer,
-  useCallback,
-  useMemo,
-} from 'react';
+import React, {useEffect, useReducer, useCallback} from 'react';
 import {Box, Button, Modal, Text, FlatList, Spinner, Center} from 'native-base';
-import {AppState, SafeAreaView} from 'react-native';
-import {COLOR} from '../misc/constants';
-
-import channelStyle from '../styles/channel.style';
-import User from './user';
-import {inviteReducer} from '../reducer/invite';
-import {withAppContext} from '../context';
+import {COLOR} from '@constants';
+import {channelStyle} from '@styles';
+import {User} from '@components';
+import {inviteReducer} from '@reducers';
+import {withAppContext} from '@src/context';
 
 const InviteModal = props => {
   const {route, showModal, sendbird, isCreating, title} = props;

@@ -6,16 +6,15 @@
  * @flow strict-local
  */
 
-import React, {createContext} from 'react';
+import React from 'react';
 
 import {NativeBaseProvider} from 'native-base';
-import Login from './src/screens/login';
-import {AppContext} from './src/context';
-import Chat from './src/screens/chat';
+import {AppContext} from '@src/context';
+import {Chat, Login} from '@screens';
 import SendBird from 'sendbird';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {SENDBIRD_APPID} from './src/misc/config';
+import {SENDBIRD_APPID} from '@misc/config';
 
 const appId = SENDBIRD_APPID;
 const sendbird = new SendBird({appId});

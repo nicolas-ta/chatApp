@@ -1,4 +1,4 @@
-import {loginReducer} from '../src/reducer/login';
+import {loginReducer} from '../src/reducers/login';
 
 describe('Login Reducer unit tests', () => {
   describe('edit nickname action', () => {

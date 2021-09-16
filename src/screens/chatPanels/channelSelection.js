@@ -5,19 +5,17 @@ import React, {
   useCallback,
   useMemo,
 } from 'react';
-import {Box, Button, Spacer, Modal, Text, FlatList} from 'native-base';
-import chatStyle from '../../styles/chat.style';
-import {channelsReducer} from '../../reducer/channels';
-import ChannelList from '../../components/channelList';
+import {Box, Button, Spacer} from 'native-base';
+import {channelsReducer} from '@reducers';
 import {AppState, SafeAreaView} from 'react-native';
-import {COLOR} from '../../misc/constants';
-import channelStyle from '../../styles/channel.style';
-import InviteModal from '../../components/inviteModal';
+import {COLOR} from '@constants';
+import {channelStyle, chatStyle} from '@styles';
+import {InviteModal, ChannelList} from '@components';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const ChannelSelection = props => {
   const {route, sendbird} = props;
-  const {currentUser, channel} = route.params;
+  const {currentUser} = route.params;
   const [queryGroupChannel, setQuery] = useState(null);
   const [queryOpenChannel, setQueryOpenChannel] = useState(null);
   const [showInviteModal, setShowInviteModal] = useState(false);

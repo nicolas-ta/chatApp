@@ -11,4 +11,6 @@ export const COLOR = {
 export const VALUE = {
   chatPanOffset: 300,
   chatPanDuration: 300,
+  errorFadeDuration: 200,
+  errorDuration: 3500,
 };

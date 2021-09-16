@@ -1,5 +1,3 @@
-import AsyncStorage from '@react-native-community/async-storage';
-
 const channelNameMaxMembers = 3;
 const channelNameEllipsisLength = 32;
 const maxUnreadMessageCount = 99;

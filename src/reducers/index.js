@@ -1,5 +1,5 @@
 import {chatReducer} from './chat';
-import {channelsReducer} from './channels';
+import {channelsReducer} from './channel';
 import {inviteReducer} from './invite';
 import {loginReducer} from './login';
 import {memberReducer} from './member';

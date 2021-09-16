@@ -18,11 +18,11 @@ import {
   Flex,
 } from 'native-base';
 import {Platform, AppState} from 'react-native';
-import chatStyle from '../../styles/chat.style';
-import {COLOR} from '../../misc/constants';
-import {chatReducer} from '../../reducer/chat';
-import Message from '../../components/message';
-import {withAppContext} from '../../context';
+import {chatStyle} from '@styles';
+import {COLOR} from '@constants';
+import {chatReducer} from '@reducers';
+import {Message} from '@components';
+import {withAppContext} from '@src/context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const CurrentChat = props => {

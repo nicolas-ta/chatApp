@@ -1,13 +1,10 @@
 import React, {useState} from 'react';
 import {Box, Button} from 'native-base';
 import {Animated, Keyboard} from 'react-native';
-import chatStyle from '../styles/chat.style';
-import {VALUE} from '../misc/constants';
-
 import {withAppContext} from '../context';
-import ChannelSelection from './chatPanels/channelSelection';
-import CurrentChat from './chatPanels/currentChat';
-import MemberList from './chatPanels/memberList';
+import {VALUE} from '@constants';
+import {chatStyle} from '@styles';
+import {MemberList, CurrentChat, ChannelSelection} from '@screens';
 
 const Chat = props => {
   const [padding] = useState(new Animated.Value(0));

@@ -1,7 +1,6 @@
 import React from 'react';
-import {withAppContext} from '../context';
-import UserMessage from './userMessage';
-import AdminMessage from './adminMessage';
+import {withAppContext} from '@src/context';
+import {UserMessage, AdminMessage} from '@components';
 
 const Message = props => {
   const {message} = props;

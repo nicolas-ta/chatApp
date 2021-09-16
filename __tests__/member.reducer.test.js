@@ -1,4 +1,4 @@
-import {memberReducer} from '../src/reducer/member';
+import {memberReducer} from '../src/reducers/member';
 
 describe('Member Reducer unit tests', () => {
   describe('refresh action - in order to full coverage refresh action with all possible use cases', () => {

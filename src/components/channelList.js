@@ -1,9 +1,9 @@
 import React from 'react';
 import {Box, Text, FlatList} from 'native-base';
 import {RefreshControl} from 'react-native';
-import Channel from './channel';
-import {COLOR} from '../misc/constants';
-import channelStyle from '../styles/channel.style';
+import {Channel} from '@components/';
+import {COLOR} from '@constants';
+import {channelStyle} from '@styles';
 
 const ChannelList = props => {
   return (

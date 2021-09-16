@@ -3,9 +3,8 @@ import React, {useEffect, useState} from 'react';
 import {Spacer, Spinner} from 'native-base';
 import {Text, Image, TouchableOpacity, View} from 'react-native';
 import moment from 'moment';
-
-import {withAppContext} from '../context';
-import {COLOR} from '../misc/constants';
+import {withAppContext} from '@src/context';
+import {COLOR} from '@constants';
 
 const noImage = require('../assets/no-avatar.png');
 

@@ -1,15 +1,14 @@
 import React, {useReducer} from 'react';
 
-import {loginReducer} from '../reducer/login';
-import loginStyle from '../styles/login.style.js';
-import {withAppContext} from '../context';
+import {loginReducer} from '@reducers';
+import {loginStyle} from '@styles';
+import {withAppContext} from '@src/context';
 import {Animated} from 'react-native';
 import {Heading, Box, Input, Button, Spinner, Text} from 'native-base';
-import {COLOR} from '../misc/constants';
-import {HOME_CHANNEL_URL} from '../misc/config';
+import {COLOR, VALUE} from '@constants';
+import {HOME_CHANNEL_URL} from '@misc/config';
 
 const Login = props => {
-
   const {navigation, sendbird} = props;
   const [state, dispatch] = useReducer(loginReducer, {
     userId: '',
@@ -17,9 +16,6 @@ const Login = props => {
     error: '',
     connecting: false,
   });
-
-  const showErrorFadeDuration = 200;
-  const showErrorDuration = 3500;
 
   const fade = new Animated.Value(0);
 
@@ -31,13 +27,13 @@ const Login = props => {
     Animated.sequence([
       Animated.timing(fade, {
         toValue: 1,
-        duration: showErrorFadeDuration,
+        duration: VALUE.errorFadeDuration,
         useNativeDriver: true,
       }),
       Animated.timing(fade, {
         toValue: 0,
-        delay: showErrorDuration,
-        duration: showErrorFadeDuration,
+        delay: VALUE.errorDuration,
+        duration: VALUE.errorFadeDuration,
         useNativeDriver: true,
       }),
     ]).start();
@@ -49,6 +45,7 @@ const Login = props => {
       showError(error.message);
       return;
     }
+    // Update the user created by assigning its nickname (here, userId = nickname)
     sendbird
       .updateCurrentUserInfo(state.nickname, '', (err, currentUser) => {
         if (err) {
@@ -62,6 +59,7 @@ const Login = props => {
       });
   };
 
+  /** Connect the application to sendbird with the input nickname */
   const login = () => {
     if (state.connecting) {
       return;
@@ -72,6 +70,9 @@ const Login = props => {
     });
   };
 
+  /** Enter the default Home channel which is the only Open Channel of the app
+   * @param currentUser The current user with the input nickname
+   */
   const enterHomeChannel = currentUser => {
     sendbird.OpenChannel.getChannel(HOME_CHANNEL_URL, (error, channel) => {
       if (error) {
@@ -92,49 +93,68 @@ const Login = props => {
     });
   };
 
+  /** UI */
+
+  const logo = (
+    <Heading size="4xl" style={loginStyle.logoTitle}>
+      10CUT
+    </Heading>
+  );
+
+  const input = (
+    <Input
+      md="10"
+      maxLength={16}
+      value={state.username}
+      onChangeText={content => {
+        dispatch({type: 'edit-nickname', payload: {content}});
+        dispatch({type: 'edit-userId', payload: {content}});
+      }}
+      variant="filled"
+      placeholder="Username (16 char max)"
+      _light={{
+        placeholderTextColor: 'blueGray.400',
+      }}
+      blurOnSubmit
+      autoFocus
+      _dark={{
+        placeholderTextColor: 'blueGray.50',
+      }}
+    />
+  );
+
+  const joinButton = (
+    <Button
+      disabled={state.connecting}
+      style={loginStyle.loginButton}
+      onPress={() => login()}>
+      Join
+    </Button>
+  );
+
+  const loader = state.connecting ? (
+    <Spinner
+      style={loginStyle.spinner}
+      animating={state.connecting}
+      size="large"
+      color={COLOR.yellow}
+    />
+  ) : undefined;
+
+  const errorDisplay = (
+    <Animated.View style={fade}>
+      <Text style={loginStyle.loginError}>{state.error}</Text>
+    </Animated.View>
+  );
+
   return (
     <Box style={loginStyle.container} safeArea>
       <Box style={loginStyle.mainWrapper}>
-        <Heading size="4xl" style={loginStyle.logoTitle}>
-          10CUT
-        </Heading>
-        <Input
-          md="10"
-          maxLength={16}
-          value={state.username}
-          onChangeText={content => {
-            dispatch({type: 'edit-nickname', payload: {content}});
-            dispatch({type: 'edit-userId', payload: {content}});
-          }}
-          variant="filled"
-          placeholder="Username (16 char max)"
-          _light={{
-            placeholderTextColor: 'blueGray.400',
-          }}
-          blurOnSubmit
-          autoFocus
-          _dark={{
-            placeholderTextColor: 'blueGray.50',
-          }}
-        />
-
-        <Button
-          disabled={state.connecting}
-          style={loginStyle.loginButton}
-          onPress={() => login()}>
-          Join
-        </Button>
-        {state.connecting ? (
-          <Spinner
-            style={loginStyle.spinner}
-            animating={state.connecting}
-            size="large"
-            color={COLOR.yellow}
-          />
-        ) : undefined}
-        <Animated.View style={fade}>
-          <Text style={loginStyle.loginError}>{state.error}</Text>
-        </Animated.View>
+        {logo}
+        {input}
+        {joinButton}
+        {loader}
+        {errorDisplay}
       </Box>
     </Box>
   );

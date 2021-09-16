@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
-import {Text, Box, Badge} from 'native-base';
-import {ColorPropType, Image, TouchableOpacity} from 'react-native';
+import {Text, Box} from 'native-base';
+import {Image, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {withAppContext} from '@src/context';
+import {COLOR} from '@constants';
 
-const noImage = require('../assets/no-avatar.png');
-
-import {withAppContext} from '../context';
-import {COLOR} from '../misc/constants';
+const noImage = require('@assets/no-avatar.png');
 
 const User = props => {
   const {user, selected, selectable, onSelect} = props;

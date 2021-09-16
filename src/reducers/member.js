@@ -11,17 +11,6 @@ export const memberReducer = (state, action) => {
       }
       break;
     }
-    case 'remove-member': {
-      const {user} = action.payload || {};
-      if (state.members.map(m => m.userId).includes(user.userId)) {
-        return {
-          ...state,
-          members: state.members.filter(m => m.userId !== user.userId),
-          error: '',
-        };
-      }
-      break;
-    }
     case 'start-loading': {
       return {...state, loading: true, error: ''};
     }
