@@ -124,6 +124,7 @@ const style = {
     marginHorizontal: 8,
   },
   messageBubble: {
+    minWidth: 95,
     maxWidth: '90%',
     borderRadius: 12,
     paddingHorizontal: 12,

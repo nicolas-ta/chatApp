@@ -10,7 +10,7 @@
     "baseUrl": ".",
     "paths": {
       "@styles": ["src/styles"],
-      "@components": ["src/components/*"],
+      "@components/*": ["src/components/*"],
       "@screens": ["src/screens/*"],
       "@constants": ["src/misc/constants"],
       "@assets/*": ["src/assets/*"],
