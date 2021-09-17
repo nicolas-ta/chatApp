@@ -70,20 +70,19 @@ const ChannelSelection = props => {
     sendbird,
   ]);
 
-  /** Refresh everytime the query for group or open channel change */
+  /** Refresh everytime the query for group channel change */
   useEffect(() => {
     if (queryGroupChannel) {
       fetchGroupChannels();
     }
+  }, [queryGroupChannel, fetchGroupChannels]);
+
+  /** Refresh everytime the query for open channel change */
+  useEffect(() => {
     if (queryOpenChannel) {
       fetchOpenChannel();
     }
-  }, [
-    queryGroupChannel,
-    queryOpenChannel,
-    fetchGroupChannels,
-    fetchOpenChannel,
-  ]);
+  }, [queryOpenChannel, fetchOpenChannel]);
 
   /**  Connection Events */
   const connectionHandler = useMemo(
