@@ -30,12 +30,19 @@ describe('Channel Reducer unit tests', () => {
     expect(channelReducer(undefined, action)).toMatchSnapshot();
   });
 
+  test('checking fetch-channels empty state', () => {
+    const action = {
+      type: 'fetch-channels',
+    };
+    const state = {channels: [channel1], channelMap: {}};
+    expect(channelReducer(state, action)).toMatchSnapshot();
+  });
+
   test('checking fetch-channels state', () => {
     const action = {
       type: 'fetch-channels',
       payload: {channels: [channel1, channel2]},
     };
-
     const state = {channels: [channel1, channel2, channel3], channelMap: {}};
     expect(channelReducer(state, action)).toMatchSnapshot();
   });

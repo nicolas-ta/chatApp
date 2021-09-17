@@ -17,9 +17,33 @@ exports[`Member Reducer unit tests checking fetch-messages empty state 1`] = `Ob
 
 exports[`Member Reducer unit tests checking fetch-messages state 1`] = `
 Object {
-  "empty": "Start conversation.",
-  "messageMap": Object {},
-  "messages": Array [],
+  "empty": "",
+  "messageMap": Object {
+    "reqId1": true,
+  },
+  "messages": Array [
+    Object {
+      "hasSameSenderAbove": false,
+      "reqId": "reqId1",
+      "sender": Object {
+        "userId": "userId1",
+      },
+    },
+    Object {
+      "hasSameSenderAbove": false,
+      "reqId": "reqId2",
+      "sender": Object {
+        "userId": "userId2",
+      },
+    },
+    Object {
+      "hasSameSenderAbove": false,
+      "reqId": "reqId1",
+      "sender": Object {
+        "userId": "userId1",
+      },
+    },
+  ],
 }
 `;
 
@@ -51,6 +75,20 @@ Object {
         "userId": "userId1",
       },
     },
+    Object {
+      "hasSameSenderAbove": true,
+      "reqId": "reqId1",
+      "sender": Object {
+        "userId": "userId1",
+      },
+    },
+    Object {
+      "hasSameSenderAbove": false,
+      "reqId": "reqId2",
+      "sender": Object {
+        "userId": "userId2",
+      },
+    },
   ],
 }
 `;
@@ -76,6 +114,13 @@ Object {
   "empty": "",
   "input": "",
   "messageMap": Object {
+    "mockMessage2": Object {
+      "hasSameSenderAbove": false,
+      "reqId": "reqId2",
+      "sender": Object {
+        "userId": "userId2",
+      },
+    },
     "reqId1": true,
   },
   "messages": Array [
@@ -84,6 +129,20 @@ Object {
       "reqId": "reqId1",
       "sender": Object {
         "userId": "userId1",
+      },
+    },
+    Object {
+      "hasSameSenderAbove": true,
+      "reqId": "reqId1",
+      "sender": Object {
+        "userId": "userId1",
+      },
+    },
+    Object {
+      "hasSameSenderAbove": false,
+      "reqId": "reqId2",
+      "sender": Object {
+        "userId": "userId2",
       },
     },
   ],

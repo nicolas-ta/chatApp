@@ -58,6 +58,7 @@ export const chatReducer = (state, action) => {
       };
     case 'send-message': {
       const {sentMsg, sentClearInput} = action.payload || {};
+
       if (sentMsg && !state.messageMap[sentMsg.reqId]) {
         if (state.messages.length > 0) {
           sentMsg.hasSameSenderAbove =

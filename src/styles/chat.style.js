@@ -37,6 +37,13 @@ export default StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
   },
+  badge: {
+    width: 10,
+    height: 10,
+    backgroundColor: COLOR.blue,
+    borderRadius: 5,
+    position: 'absolute',
+  },
   headerButton: {
     margin: 10,
   },

@@ -19,7 +19,9 @@ export const inviteReducer = (state, action) => {
     }
     case 'fetch-users': {
       const {users} = action.payload || {};
-      const distinctUsers = users.filter(user => !state.userMap[user.userId]);
+      const distinctUsers = users
+        ? users.filter(user => !state.userMap[user.userId])
+        : [];
 
       let memberUserIds = [];
       if (state.channel) {
@@ -46,14 +48,16 @@ export const inviteReducer = (state, action) => {
     }
     case 'select-user': {
       const {user} = action.payload || {};
+
       if (!state.selectedUsers.includes(user)) {
         return {
           ...state,
           error: '',
           selectedUsers: [...state.selectedUsers, user],
         };
+      } else {
+        break;
       }
-      break;
     }
     case 'unselect-user': {
       const {user} = action.payload || {};

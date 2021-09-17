@@ -9,7 +9,7 @@ const mockMessage1 = {
 const mockMessage2 = {
   sender: {userId: 'userId2'},
   reqId: 'reqId2',
-  hasSameSenderAbove: false,
+  hasSameSenderAbove: true,
 };
 
 describe('Member Reducer unit tests', () => {
@@ -31,8 +31,14 @@ describe('Member Reducer unit tests', () => {
   });
 
   test('checking fetch-messages state', () => {
-    const action = {type: 'fetch-messages', payload: {messages: []}};
-    const state = {messageMap: [], messages: []};
+    const action = {
+      type: 'fetch-messages',
+      payload: {messages: [mockMessage1]},
+    };
+    const state = {
+      messageMap: {mockMessage1},
+      messages: [mockMessage1, mockMessage2],
+    };
     expect(chatReducer(state, action)).toMatchSnapshot();
   });
 
@@ -44,7 +50,7 @@ describe('Member Reducer unit tests', () => {
 
   test('checking receive-message state', () => {
     const action = {type: 'receive-message', payload: {message: mockMessage1}};
-    const state = {messages: []};
+    const state = {messages: [mockMessage1, mockMessage2]};
     expect(chatReducer(state, action)).toMatchSnapshot();
   });
 
@@ -64,7 +70,10 @@ describe('Member Reducer unit tests', () => {
         sentClearInput: true,
       },
     };
-    const state = {messageMap: {}, messages: []};
+    const state = {
+      messageMap: {mockMessage2},
+      messages: [mockMessage1, mockMessage2],
+    };
     expect(chatReducer(state, action)).toMatchSnapshot();
   });
 

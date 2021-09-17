@@ -29,6 +29,22 @@ Object {
 }
 `;
 
+exports[`Channel Reducer unit tests checking fetch-channels empty state 1`] = `
+Object {
+  "channelMap": Object {
+    "url1": true,
+  },
+  "channels": Array [
+    Object {
+      "createdAt": "Fri Sep 17 2021 15:43:14 GMT+0200 (heure d’été d’Europe centrale)",
+      "lastMessage": "lastMessage1",
+      "url": "url1",
+    },
+  ],
+  "empty": "",
+}
+`;
+
 exports[`Channel Reducer unit tests checking fetch-channels state 1`] = `
 Object {
   "channelMap": Object {

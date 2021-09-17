@@ -46,7 +46,6 @@ const Login = props => {
    */
   const callbackLogin = (error, user) => {
     if (error) {
-      console.log('nico: error dans callbacklogin', error.message);
       showError(error.message);
       return;
     }
@@ -71,7 +70,6 @@ const Login = props => {
     }
     dispatch({type: 'start-connection'});
     sendbird.connect(state.nickname, callbackLogin).catch(error => {
-      console.log('nico: error:', error);
       showError(error.message);
     });
   };

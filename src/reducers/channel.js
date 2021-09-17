@@ -13,10 +13,6 @@ export const channelReducer = (state, action) => {
     }
     case 'fetch-channels': {
       const {channels} = action.payload || {};
-      // if (!channels || channels.length === 0 || !channels[0]) {
-      //   return {...state};
-      // }
-
       const distinctChannels = channels
         ? channels.filter(channel => {
             return channel && !state.channelMap[channel.url];

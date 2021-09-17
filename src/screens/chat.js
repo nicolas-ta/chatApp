@@ -10,6 +10,7 @@ const Chat = props => {
   const [padding] = useState(new Animated.Value(0));
   const {route} = props;
   const [currentScreen, setCurrentScreen] = useState(1);
+  const [unreadChannel, setUnreadChannel] = useState(0);
 
   /** Open the left panel showing the channels */
   const openMenu = () => {
@@ -50,6 +51,7 @@ const Chat = props => {
     <ChannelSelection
       {...props}
       isCurrentScreen={currentScreen === 0}
+      setUnreadChannel={setUnreadChannel}
       goToChat={newChannel => {
         reset();
         route.params.channel = newChannel;
@@ -64,6 +66,7 @@ const Chat = props => {
         isCurrentScreen={currentScreen === 1}
         {...props}
         openMenu={openMenu}
+        unreadChannel={unreadChannel}
         openOnlineMember={openOnlineMember}
         overlay={
           currentScreen !== 1 ? (
