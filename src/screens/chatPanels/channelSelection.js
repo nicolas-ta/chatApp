@@ -6,7 +6,7 @@ import React, {
   useMemo,
 } from 'react';
 import {Box, Button, Spacer} from 'native-base';
-import {channelsReducer} from '@reducers';
+import {channelReducer} from '@reducers';
 import {AppState, SafeAreaView} from 'react-native';
 import {COLOR} from '@constants';
 import {channelStyle, chatStyle} from '@styles';
@@ -21,7 +21,7 @@ const ChannelSelection = props => {
   const [queryOpenChannel, setQueryOpenChannel] = useState(null);
   const [showInviteModal, setShowInviteModal] = useState(false);
 
-  const [state, dispatch] = useReducer(channelsReducer, {
+  const [state, dispatch] = useReducer(channelReducer, {
     sendbird,
     currentUser,
     userList: [],

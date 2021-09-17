@@ -1,0 +1,211 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Channel Reducer unit tests checking delete-channel state 1`] = `
+Object {
+  "channelMap": Object {
+    "url1": false,
+  },
+  "channels": Array [
+    Object {
+      "createdAt": "Fri Sep 17 2021 15:43:26 GMT+0200 (heure d’été d’Europe centrale)",
+      "lastMessage": "lastMessage2",
+      "url": "url2",
+    },
+  ],
+  "empty": "",
+}
+`;
+
+exports[`Channel Reducer unit tests checking end-loading state 1`] = `
+Object {
+  "error": null,
+  "loading": false,
+}
+`;
+
+exports[`Channel Reducer unit tests checking error state 1`] = `
+Object {
+  "error": undefined,
+}
+`;
+
+exports[`Channel Reducer unit tests checking fetch-channels state 1`] = `
+Object {
+  "channelMap": Object {
+    "url1": true,
+    "url2": true,
+    "url3": true,
+  },
+  "channels": Array [
+    Object {
+      "createdAt": "Fri Sep 17 2021 15:43:14 GMT+0200 (heure d’été d’Europe centrale)",
+      "lastMessage": "lastMessage1",
+      "url": "url1",
+    },
+    Object {
+      "createdAt": "Fri Sep 17 2021 15:43:26 GMT+0200 (heure d’été d’Europe centrale)",
+      "lastMessage": "lastMessage2",
+      "url": "url2",
+    },
+    Object {
+      "createdAt": "Fri Sep 17 2021 15:50:50 GMT+0200 (heure d’été d’Europe centrale)",
+      "lastMessage": "lastMessage3",
+      "url": "url3",
+    },
+    Object {
+      "createdAt": "Fri Sep 17 2021 15:43:14 GMT+0200 (heure d’été d’Europe centrale)",
+      "lastMessage": "lastMessage1",
+      "url": "url1",
+    },
+    Object {
+      "createdAt": "Fri Sep 17 2021 15:43:26 GMT+0200 (heure d’été d’Europe centrale)",
+      "lastMessage": "lastMessage2",
+      "url": "url2",
+    },
+  ],
+  "empty": "",
+}
+`;
+
+exports[`Channel Reducer unit tests checking fetch-open-channels state 1`] = `
+Object {
+  "channelMap": Object {},
+  "empty": "No conversation",
+  "openChannels": Array [],
+}
+`;
+
+exports[`Channel Reducer unit tests checking fetch-open-channels with channels state 1`] = `
+Object {
+  "channelMap": Object {
+    "url1": true,
+    "url2": true,
+  },
+  "empty": "",
+  "openChannelMap": Object {
+    "channel2": Object {
+      "createdAt": "Fri Sep 17 2021 15:43:26 GMT+0200 (heure d’été d’Europe centrale)",
+      "lastMessage": "lastMessage2",
+      "url": "url2",
+    },
+  },
+  "openChannels": Array [
+    Object {
+      "createdAt": "Fri Sep 17 2021 15:43:14 GMT+0200 (heure d’été d’Europe centrale)",
+      "lastMessage": "lastMessage1",
+      "url": "url1",
+    },
+    Object {
+      "createdAt": "Fri Sep 17 2021 15:43:26 GMT+0200 (heure d’été d’Europe centrale)",
+      "lastMessage": "lastMessage2",
+      "url": "url2",
+    },
+    Object {
+      "createdAt": "Fri Sep 17 2021 15:43:14 GMT+0200 (heure d’été d’Europe centrale)",
+      "lastMessage": "lastMessage1",
+      "url": "url1",
+    },
+    Object {
+      "createdAt": "Fri Sep 17 2021 15:43:26 GMT+0200 (heure d’été d’Europe centrale)",
+      "lastMessage": "lastMessage2",
+      "url": "url2",
+    },
+  ],
+}
+`;
+
+exports[`Channel Reducer unit tests checking initial state 1`] = `undefined`;
+
+exports[`Channel Reducer unit tests checking join-channel state 1`] = `
+Object {
+  "channelMap": Object {},
+  "channels": Array [],
+  "empty": "",
+}
+`;
+
+exports[`Channel Reducer unit tests checking join-channel with channel state 1`] = `
+Object {
+  "channelMap": Object {
+    "channel1": Object {
+      "createdAt": "Fri Sep 17 2021 15:43:14 GMT+0200 (heure d’été d’Europe centrale)",
+      "lastMessage": "lastMessage1",
+      "url": "url1",
+    },
+    "url1": true,
+  },
+  "channels": Array [
+    Object {
+      "createdAt": "Fri Sep 17 2021 15:43:14 GMT+0200 (heure d’été d’Europe centrale)",
+      "lastMessage": "lastMessage1",
+      "url": "url1",
+    },
+    Object {
+      "createdAt": "Fri Sep 17 2021 15:43:26 GMT+0200 (heure d’été d’Europe centrale)",
+      "lastMessage": "lastMessage2",
+      "url": "url2",
+    },
+  ],
+  "empty": "",
+}
+`;
+
+exports[`Channel Reducer unit tests checking leave-channel state 1`] = `
+Object {
+  "channelMap": Object {},
+  "channels": Array [],
+  "empty": "No conversation",
+}
+`;
+
+exports[`Channel Reducer unit tests checking refresh state 1`] = `
+Object {
+  "channelMap": Object {},
+  "channels": Array [],
+  "error": null,
+  "loading": false,
+  "openChannelMap": Object {},
+  "openChannels": Array [],
+}
+`;
+
+exports[`Channel Reducer unit tests checking start-loading state 1`] = `
+Object {
+  "error": null,
+  "loading": true,
+}
+`;
+
+exports[`Channel Reducer unit tests checking update-channel state 1`] = `
+Object {
+  "channelMap": Object {},
+  "channels": Array [],
+  "empty": "",
+}
+`;
+
+exports[`Channel Reducer unit tests checking update-channel with channel state 1`] = `
+Object {
+  "channelMap": Object {
+    "channel1": Object {
+      "createdAt": "Fri Sep 17 2021 15:43:14 GMT+0200 (heure d’été d’Europe centrale)",
+      "lastMessage": "lastMessage1",
+      "url": "url1",
+    },
+    "url1": true,
+  },
+  "channels": Array [
+    Object {
+      "createdAt": "Fri Sep 17 2021 15:43:14 GMT+0200 (heure d’été d’Europe centrale)",
+      "lastMessage": "lastMessage1",
+      "url": "url1",
+    },
+    Object {
+      "createdAt": "Fri Sep 17 2021 15:43:26 GMT+0200 (heure d’été d’Europe centrale)",
+      "lastMessage": "lastMessage2",
+      "url": "url2",
+    },
+  ],
+  "empty": "",
+}
+`;

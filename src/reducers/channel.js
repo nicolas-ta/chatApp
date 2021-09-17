@@ -1,4 +1,4 @@
-export const channelsReducer = (state, action) => {
+export const channelReducer = (state, action) => {
   switch (action.type) {
     case 'refresh': {
       return {
@@ -13,9 +13,15 @@ export const channelsReducer = (state, action) => {
     }
     case 'fetch-channels': {
       const {channels} = action.payload || {};
-      const distinctChannels = channels.filter(
-        channel => !state.channelMap[channel.url],
-      );
+      // if (!channels || channels.length === 0 || !channels[0]) {
+      //   return {...state};
+      // }
+
+      const distinctChannels = channels
+        ? channels.filter(channel => {
+            return channel && !state.channelMap[channel.url];
+          })
+        : [];
       const mergedChannels = [...state.channels, ...distinctChannels].sort(
         (a, b) => {
           const at = a.lastMessage ? a.lastMessage.createdAt : a.createdAt;
@@ -32,15 +38,18 @@ export const channelsReducer = (state, action) => {
         ...state,
         channelMap,
         channels: mergedChannels,
-        empty: mergedChannels.length === 0 ? 'No conversation' : '',
+        empty: mergedChannels.length === 0 ? 'No channel' : '',
       };
     }
 
     case 'fetch-open-channels': {
       const {channels} = action.payload || {};
-      const distinctChannels = channels.filter(
-        channel => !state.openChannelMap[channel.url],
-      );
+
+      const distinctChannels = channels
+        ? channels.filter(
+            channel => channel && !state.openChannelMap[channel.url],
+          )
+        : [];
       const mergedChannels = [...state.openChannels, ...distinctChannels].sort(
         (a, b) => {
           const at = a.lastMessage ? a.lastMessage.createdAt : a.createdAt;
@@ -65,15 +74,17 @@ export const channelsReducer = (state, action) => {
       const {channel} = action.payload || {};
       return {
         ...state,
-        channelMap: {...state.channelMap, [channel.url]: true},
-        channels: [
-          channel,
-          ...state.channels.filter(c => c.url !== channel.url),
-        ].sort((a, b) => {
-          const at = a.lastMessage ? a.lastMessage.createdAt : a.createdAt;
-          const bt = b.lastMessage ? b.lastMessage.createdAt : b.createdAt;
-          return bt - at;
-        }),
+        channelMap: channel ? {...state.channelMap, [channel.url]: true} : {},
+        channels: channel
+          ? [
+              channel,
+              ...state.channels.filter(c => c.url !== channel.url),
+            ].sort((a, b) => {
+              const at = a.lastMessage ? a.lastMessage.createdAt : a.createdAt;
+              const bt = b.lastMessage ? b.lastMessage.createdAt : b.createdAt;
+              return bt - at;
+            })
+          : [],
         empty: '',
       };
     }
@@ -83,7 +94,7 @@ export const channelsReducer = (state, action) => {
       const slicedChannels = state.channels.filter(c => c.url !== channel.url);
       return {
         ...state,
-        channelMap: {...state.channelMap, [channel.url]: false},
+        channelMap: channel ? {...state.channelMap, [channel.url]: false} : {},
         channels: slicedChannels,
         empty: slicedChannels.length === 0 ? 'No conversation' : '',
       };

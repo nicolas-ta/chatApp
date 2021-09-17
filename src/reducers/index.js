@@ -1,12 +1,12 @@
 import {chatReducer} from './chat';
-import {channelsReducer} from './channel';
+import {channelReducer} from './channel';
 import {inviteReducer} from './invite';
 import {loginReducer} from './login';
 import {memberReducer} from './member';
 
 export {
   chatReducer,
-  channelsReducer,
+  channelReducer,
   inviteReducer,
   loginReducer,
   memberReducer,

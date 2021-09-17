@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Reducer unit tests checking edit-nickname state 1`] = `
+Object {
+  "nickname": undefined,
+}
+`;
+
+exports[`Login Reducer unit tests checking edit-userId state 1`] = `
+Object {
+  "userId": undefined,
+}
+`;
+
+exports[`Login Reducer unit tests checking end-connection state 1`] = `
+Object {
+  "connecting": false,
+}
+`;
+
+exports[`Login Reducer unit tests checking error empty state 1`] = `
+Object {
+  "error": undefined,
+}
+`;
+
+exports[`Login Reducer unit tests checking initial state 1`] = `undefined`;
+
+exports[`Login Reducer unit tests checking start-connection state 1`] = `
+Object {
+  "connecting": true,
+  "error": "",
+}
+`;

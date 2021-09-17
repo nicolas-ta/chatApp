@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Member Reducer unit tests checking add-member empty argument state 1`] = `
+Object {
+  "members": Array [],
+}
+`;
+
+exports[`Member Reducer unit tests checking add-member existing state 1`] = `
+Object {
+  "members": Array [
+    Object {
+      "userId": "first_member",
+    },
+    Object {
+      "userId": "second_member",
+    },
+  ],
+}
+`;
+
+exports[`Member Reducer unit tests checking add-member missing argument state 1`] = `
+Object {
+  "error": "",
+  "members": Array [
+    Object {
+      "userId": "first_member",
+    },
+  ],
+}
+`;
+
+exports[`Member Reducer unit tests checking add-member new state 1`] = `
+Object {
+  "error": "",
+  "members": Array [
+    Object {
+      "userId": "first_member",
+    },
+    Object {
+      "userId": "second_member",
+    },
+    Object {
+      "userId": "third_member",
+    },
+  ],
+}
+`;
+
+exports[`Member Reducer unit tests checking end-loading state 1`] = `
+Object {
+  "error": undefined,
+  "loading": false,
+}
+`;
+
+exports[`Member Reducer unit tests checking error state 1`] = `
+Object {
+  "error": undefined,
+}
+`;
+
+exports[`Member Reducer unit tests checking initial state 1`] = `undefined`;
+
+exports[`Member Reducer unit tests checking refresh state 1`] = `
+Object {
+  "error": "",
+  "members": undefined,
+}
+`;
+
+exports[`Member Reducer unit tests checking start-loading state 1`] = `
+Object {
+  "error": "",
+  "loading": true,
+}
+`;

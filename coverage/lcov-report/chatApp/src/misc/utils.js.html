@@ -89,55 +89,75 @@
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import AsyncStorage from '@react-native-community/async-storage';
-&nbsp;
-const channelNameMaxMembers = 3;
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const channelNameMaxMembers = 2;
 const channelNameEllipsisLength = 32;
 const maxUnreadMessageCount = 99;
 &nbsp;
+/** Create an ellipsis if the count exceed len
+ * @param s input string
+ * @param len max char
+ */
 export const ellipsis = <span class="fstat-no" title="function not covered" >(s</span>, len) =&gt; {
 <span class="cstat-no" title="statement not covered" >  return s.length &gt; len ? s.substring(0, len) + '..' : s;</span>
 };
+&nbsp;
+/** Generate a channel name with the channel members
+ * @param channel the new channel created
+ */
 export const createChannelName = <span class="fstat-no" title="function not covered" >ch</span>annel =&gt; {
 <span class="cstat-no" title="statement not covered" >  if (channel.name === 'Group Channel' || channel.name.length === 0) {</span>
     const nicknames = <span class="cstat-no" title="statement not covered" >channel.members.map(<span class="fstat-no" title="function not covered" >m </span>=&gt; <span class="cstat-no" title="statement not covered" >m.nickname)</span>;</span>
 <span class="cstat-no" title="statement not covered" >    if (nicknames.length &gt; channelNameMaxMembers) {</span>
 <span class="cstat-no" title="statement not covered" >      return ellipsis(</span>
-        `${nicknames.slice(0, channelNameMaxMembers + 1).join(', ')} and ${
+        `${nicknames.slice(0, channelNameMaxMembers + 1).join(', ')} + ${
           nicknames.length - channelNameMaxMembers
-        } others`,
+        }`,
         channelNameEllipsisLength,
       );
     } else {
@@ -146,6 +166,7 @@ export const createChannelName = <span class="fstat-no" title="function not cove
   }
 <span class="cstat-no" title="statement not covered" >  return ellipsis(channel.name, channelNameEllipsisLength);</span>
 };
+&nbsp;
 export const createUnreadMessageCount = <span class="fstat-no" title="function not covered" >ch</span>annel =&gt; {
 <span class="cstat-no" title="statement not covered" >  if (channel.unreadMessageCount &gt; maxUnreadMessageCount) {</span>
 <span class="cstat-no" title="statement not covered" >    return `${maxUnreadMessageCount}+`;</span>
@@ -160,7 +181,7 @@ export const createUnreadMessageCount = <span class="fstat-no" title="function n
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Sep 16 2021 22:02:33 GMT+0200 (heure d’été d’Europe centrale)
+                at Fri Sep 17 2021 18:34:18 GMT+0200 (heure d’été d’Europe centrale)
             </div>
         </div>
         <script src="../../../prettify.js"></script>

@@ -11,6 +11,10 @@ export const chatReducer = (state, action) => {
     }
     case 'fetch-messages': {
       const {messages} = action.payload || {};
+
+      if (!messages) {
+        return {...state};
+      }
       const distinctMessages = messages.filter(
         message => !state.messageMap[message.reqId],
       );
@@ -37,7 +41,6 @@ export const chatReducer = (state, action) => {
     }
     case 'receive-message':
       const {message, clearInput} = action.payload || {};
-
       if (state.messages.length > 0) {
         message.hasSameSenderAbove =
           message.sender &&
@@ -47,13 +50,15 @@ export const chatReducer = (state, action) => {
       return {
         ...state,
         messages: [message, ...state.messages],
-        messageMap: {...state.messageMap, [message.reqId]: true},
+        messageMap: message
+          ? {...state.messageMap, [message.reqId]: true}
+          : {...state.messageMap},
         input: clearInput ? '' : state.input,
         empty: '',
       };
     case 'send-message': {
       const {sentMsg, sentClearInput} = action.payload || {};
-      if (!state.messageMap[sentMsg.reqId]) {
+      if (sentMsg && !state.messageMap[sentMsg.reqId]) {
         if (state.messages.length > 0) {
           sentMsg.hasSameSenderAbove =
             sentMsg.sender &&
@@ -74,7 +79,6 @@ export const chatReducer = (state, action) => {
             const updatedMessages = [...state.messages];
             sentMsg.hasSameSenderAbove = updatedMessages[i].hasSameSenderAbove;
             updatedMessages[i] = sentMsg;
-
             return {
               ...state,
               input: sentClearInput ? '' : state.input,

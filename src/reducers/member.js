@@ -6,7 +6,7 @@ export const memberReducer = (state, action) => {
     }
     case 'add-member': {
       const {user} = action.payload || {};
-      if (!state.members.map(m => m.userId).includes(user.userId)) {
+      if (user && !state.members.map(m => m.userId).includes(user.userId)) {
         return {...state, members: [...state.members, user], error: ''};
       }
       break;
