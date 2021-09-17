@@ -10,7 +10,7 @@ export default StyleSheet.create({
 
   // Channel
   channelContainer: {
-    height: 100,
+    height: 75,
     flexDirection: 'row',
     borderRadius: 5,
     backgroundColor: COLOR.darkerBlue,
@@ -34,7 +34,7 @@ export default StyleSheet.create({
     paddingBottom: 2,
   },
   name: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: '100',
     color: '#fff',
     marginBottom: 2,

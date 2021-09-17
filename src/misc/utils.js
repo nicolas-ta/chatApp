@@ -1,4 +1,4 @@
-const channelNameMaxMembers = 3;
+const channelNameMaxMembers = 2;
 const channelNameEllipsisLength = 32;
 const maxUnreadMessageCount = 99;
 
@@ -18,9 +18,9 @@ export const createChannelName = channel => {
     const nicknames = channel.members.map(m => m.nickname);
     if (nicknames.length > channelNameMaxMembers) {
       return ellipsis(
-        `${nicknames.slice(0, channelNameMaxMembers + 1).join(', ')} and ${
+        `${nicknames.slice(0, channelNameMaxMembers + 1).join(', ')} + ${
           nicknames.length - channelNameMaxMembers
-        } others`,
+        }`,
         channelNameEllipsisLength,
       );
     } else {
