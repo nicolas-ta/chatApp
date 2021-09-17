@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState, useMemo} from 'react';
 import {Box, Text} from 'native-base';
 import {Image, TouchableOpacity} from 'react-native';
@@ -103,7 +104,7 @@ const Channel = props => {
       activeOpacity={0.8}
       style={{
         ...channelStyle.channelContainer,
-        backgroundColor: isCurrentChannel ? COLOR.blue : COLOR.darkerBlue,
+        backgroundColor: isCurrentChannel ? '#203945' : COLOR.darkerBlue,
       }}
       onPress={() => onPress(channel)}>
       <Image

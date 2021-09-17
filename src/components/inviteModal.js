@@ -61,7 +61,7 @@ const InviteModal = props => {
   }, [channel.members, currentUser.userId, isCreating, sendbird]);
 
   /** Callback from the create channel function */
-  const handleCreateChannel = () => (err, newChannel) => {
+  const handleCreateChannel = (err, newChannel) => {
     if (!err) {
       dispatch({type: 'reset-selection'});
       props.onClose(newChannel);
