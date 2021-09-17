@@ -6,7 +6,7 @@ import {COLOR} from '@constants';
 import {channelStyle} from '@styles';
 
 const ChannelList = props => {
-  const {currentChannel} = props;
+  const {currentChannel, setUnreadChannel} = props;
   return (
     <Box>
       <Text style={channelStyle.title}>{props.title}</Text>
@@ -18,6 +18,7 @@ const ChannelList = props => {
             isCurrentChannel={currentChannel.url === item.url}
             key={item.url}
             channel={item}
+            setUnreadChannel={setUnreadChannel}
             onPress={channel => props.switchChannel(channel)}
           />
         )}

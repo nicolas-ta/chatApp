@@ -1,10 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useState, useMemo} from 'react';
+import React, {useEffect, useCallback, useState, useMemo} from 'react';
 import {Box, Text} from 'native-base';
 import {Image, TouchableOpacity} from 'react-native';
 import moment from 'moment';
 import {channelStyle} from '@styles';
 import {withAppContext} from '@src/context';
+
 import {
   createChannelName,
   createUnreadMessageCount,
@@ -13,7 +14,8 @@ import {
 import {COLOR, VALUE} from '@constants';
 
 const Channel = props => {
-  const {sendbird, channel, onPress, isCurrentChannel} = props;
+  const {sendbird, channel, onPress, isCurrentChannel, setUnreadChannel} =
+    props;
   const [name, setName] = useState('');
   const [lastMessage, setLastMessage] = useState('');
   const [unreadMessageCount, setUnreadMessageCount] = useState('');
@@ -71,9 +73,20 @@ const Channel = props => {
   /** Update the unread message count
    * @param newChannel the new channel created
    */
-  const updateUnreadMessageCount = newChannel => {
-    setUnreadMessageCount(createUnreadMessageCount(newChannel));
-  };
+  const updateUnreadMessageCount = useCallback(
+    newChannel => {
+      setUnreadMessageCount(createUnreadMessageCount(newChannel));
+      sendbird.getTotalUnreadChannelCount((error, count) => {
+        if (error) {
+          // Handle error.
+        }
+        if (channel.channelType === 'group') {
+          setUnreadChannel(count);
+        }
+      });
+    },
+    [channel.channelType, sendbird, setUnreadChannel],
+  );
 
   /** Update the date
    * @param newChannel the new channel created
@@ -98,7 +111,7 @@ const Channel = props => {
     return () => {
       sendbird.removeChannelHandler(`channel_${channel.url}`);
     };
-  }, [channel, channelHandler, sendbird]);
+  }, [channel, channelHandler, sendbird, updateUnreadMessageCount]);
   return (
     <TouchableOpacity
       activeOpacity={0.8}

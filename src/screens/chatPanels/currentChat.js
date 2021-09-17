@@ -26,7 +26,7 @@ import {withAppContext} from '@src/context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const CurrentChat = props => {
-  const {route, sendbird} = props;
+  const {route, sendbird, unreadChannel} = props;
   const {currentUser, channel} = route.params;
 
   const [query, setQuery] = useState(null);
@@ -212,6 +212,7 @@ const CurrentChat = props => {
         style={chatStyle.headerButton}
         onPress={props.openMenu}>
         <HamburgerIcon color={COLOR.red} />
+        {unreadChannel > 0 ? <Box style={chatStyle.badge} /> : undefined}
       </Button>
       <Text style={chatStyle.headerName}>{channel.name}</Text>
       <Spacer />

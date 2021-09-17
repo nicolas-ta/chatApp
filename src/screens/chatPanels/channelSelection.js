@@ -15,7 +15,7 @@ import ChannelList from '@components/channelList';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const ChannelSelection = props => {
-  const {route, sendbird} = props;
+  const {route, sendbird, setUnreadChannel} = props;
   const {currentUser, channel} = route.params;
   const [queryGroupChannel, setQuery] = useState(null);
   const [queryOpenChannel, setQueryOpenChannel] = useState(null);
@@ -239,6 +239,7 @@ const ChannelSelection = props => {
         channels={state.channels}
         loading={state.loading}
         refresh={refresh}
+        setUnreadChannel={setUnreadChannel}
         error={state.error}
         empty={'No private channel'}
         next={fetchGroupChannels}

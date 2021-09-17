@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Text, Box} from 'native-base';
 import {Image, TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import {withAppContext} from '@src/context';
 import {COLOR} from '@constants';
 
@@ -29,9 +28,6 @@ const User = props => {
           source={user.profileUrl !== '' ? {uri: user.profileUrl} : noImage}
           style={style.profileImage}
         />
-        {selected && (
-          <Icon name="done" color={COLOR.blue} size={40} style={style.check} />
-        )}
         {user.connectionStatus === 'online' && <Box style={style.badge} />}
       </Box>
       <Text style={style.nickname}>{user.nickname || '(Unnamed)'}</Text>
