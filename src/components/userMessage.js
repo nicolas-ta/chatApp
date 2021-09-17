@@ -15,7 +15,6 @@ const UserMessage = props => {
 
   useEffect(() => {
     const channelHandler = new sendbird.ChannelHandler();
-
     sendbird.addChannelHandler(`message-${message.reqId}`, channelHandler);
     return () => {
       sendbird.removeChannelHandler(`message-${message.reqId}`);

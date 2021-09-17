@@ -40,7 +40,11 @@ const Login = props => {
     dispatch({type: 'end-connection'});
   };
 
-  const handleLogin = (error, user) => {
+  /** Callback of the Sendbird connect
+   * @param error returned error from the API
+   * @param user returned user from the API
+   */
+  const callbackLogin = (error, user) => {
     if (error) {
       showError(error.message);
       return;
@@ -65,7 +69,7 @@ const Login = props => {
       return;
     }
     dispatch({type: 'start-connection'});
-    sendbird.connect(state.nickname, handleLogin).catch(error => {
+    sendbird.connect(state.nickname, callbackLogin).catch(error => {
       showError(error.message);
     });
   };

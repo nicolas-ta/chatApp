@@ -10,12 +10,13 @@ import {channelsReducer} from '@reducers';
 import {AppState, SafeAreaView} from 'react-native';
 import {COLOR} from '@constants';
 import {channelStyle, chatStyle} from '@styles';
-import {InviteModal, ChannelList} from '@components';
+import InviteModal from '@components/inviteModal';
+import ChannelList from '@components/channelList';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const ChannelSelection = props => {
   const {route, sendbird} = props;
-  const {currentUser} = route.params;
+  const {currentUser, channel} = route.params;
   const [queryGroupChannel, setQuery] = useState(null);
   const [queryOpenChannel, setQueryOpenChannel] = useState(null);
   const [showInviteModal, setShowInviteModal] = useState(false);
@@ -117,23 +118,24 @@ const ChannelSelection = props => {
     () => new sendbird.ChannelHandler(),
     [sendbird.ChannelHandler],
   );
-  channelHandler.onUserJoined = (channel, user) => {
+  channelHandler.onUserJoined = (currentChannel, user) => {
     if (user.userId === sendbird.currentUser.userId) {
-      dispatch({type: 'join-channel', payload: {channel}});
+      dispatch({type: 'join-channel', payload: {channel: currentChannel}});
     }
   };
-  channelHandler.onUserLeft = (channel, user) => {
+  channelHandler.onUserLeft = (currentChannel, user) => {
     if (user.userId === sendbird.currentUser.userId) {
-      dispatch({type: 'leave-channel', payload: {channel}});
+      dispatch({type: 'leave-channel', payload: {channel: currentChannel}});
     }
   };
-  channelHandler.onChannelChanged = channel => {
-    dispatch({type: 'update-channel', payload: {channel}});
+  channelHandler.onChannelChanged = currentChannel => {
+    dispatch({type: 'update-channel', payload: {channel: currentChannel}});
   };
-  channelHandler.onChannelDeleted = channel => {
-    dispatch({type: 'delete-channel', payload: {channel}});
+  channelHandler.onChannelDeleted = currentChannel => {
+    dispatch({type: 'delete-channel', payload: {channel: currentChannel}});
   };
 
+  /** Handle reconnexion when the app return from background */
   const handleStateChange = useCallback(
     newState => {
       if (newState === 'active') {
@@ -148,8 +150,8 @@ const ChannelSelection = props => {
   /** Switch channel
    @param channel the selected channel in the channel selection panel
    */
-  const switchChannel = channel => {
-    props.goToChat(channel);
+  const switchChannel = newChannel => {
+    props.goToChat(newChannel);
   };
 
   /** Refresh the channel panel */
@@ -207,55 +209,76 @@ const ChannelSelection = props => {
     }
   }, [queryOpenChannel]);
 
-  const invitationDone = newChan => {
+  /** Dismiss the invitation modal, switch to the newly created channel
+   *  and dismiss channel panel
+   * @param newChannel the new chan created
+   */
+  const invitationDone = newChannel => {
     setShowInviteModal(false);
-    if (newChan) {
-      switchChannel(newChan);
+    if (newChannel) {
+      switchChannel(newChannel);
     }
   };
+
+  /** UI */
+  const channelList = (
+    <>
+      <ChannelList
+        currentChannel={channel}
+        title="Public channels"
+        channels={state.openChannels}
+        loading={state.loading}
+        refresh={refresh}
+        error={state.error}
+        empty={'No public channel'}
+        next={fetchOpenChannel}
+        switchChannel={switchChannel}
+      />
+      <ChannelList
+        currentChannel={channel}
+        title="Private channels"
+        channels={state.channels}
+        loading={state.loading}
+        refresh={refresh}
+        error={state.error}
+        empty={'No private channel'}
+        next={fetchGroupChannels}
+        switchChannel={newChannel => switchChannel(newChannel)}
+      />
+    </>
+  );
+
+  const inviteModal = (
+    <InviteModal
+      {...props}
+      title="Invite members"
+      sendbird={sendbird}
+      empty="No one to invite"
+      showModal={showInviteModal}
+      isCreating={true}
+      onClose={newChan => invitationDone(newChan)}
+    />
+  );
+
+  const inviteButton = (
+    <Button
+      onPress={() => setShowInviteModal(true)}
+      backgroundColor={COLOR.blue}
+      style={channelStyle.newButton}
+      startIcon={<Icon name="add" color={'white'} size={24} />}>
+      Create private channel
+    </Button>
+  );
 
   return (
     <Box
       // eslint-disable-next-line react-native/no-inline-styles
       style={[chatStyle.leftBox, {elevation: props.isCurrentScreen ? 3 : 1}]}>
       <SafeAreaView style={channelStyle.container}>
-        <ChannelList
-          title="Public channels"
-          channels={state.openChannels}
-          loading={state.loading}
-          refresh={refresh}
-          error={state.error}
-          empty={'No public channel'}
-          next={fetchOpenChannel}
-          switchChannel={switchChannel}
-        />
-        <ChannelList
-          title="Private channels"
-          channels={state.channels}
-          loading={state.loading}
-          refresh={refresh}
-          error={state.error}
-          empty={'No private channel'}
-          next={fetchGroupChannels}
-          switchChannel={channel => switchChannel(channel)}
-        />
+        {channelList}
         <Spacer />
-        <Button
-          onPress={() => setShowInviteModal(true)}
-          backgroundColor={COLOR.blue}
-          style={channelStyle.newButton}
-          startIcon={<Icon name="add" color={'white'} size={24} />}>
-          Create private channel
-        </Button>
-        <InviteModal
-          {...props}
-          title="Invite members"
-          sendbird={sendbird}
-          empty="No one to invite"
-          showModal={showInviteModal}
-          isCreating={true}
-          onClose={newChan => invitationDone(newChan)}
-        />
+        {inviteButton}
+        {inviteModal}
       </SafeAreaView>
     </Box>
   );

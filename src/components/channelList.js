@@ -1,18 +1,21 @@
 import React from 'react';
 import {Box, Text, FlatList} from 'native-base';
-import {RefreshControl} from 'react-native';
-import {Channel} from '@components/';
+import {Dimensions, RefreshControl} from 'react-native';
+import Channel from '@components/channel';
 import {COLOR} from '@constants';
 import {channelStyle} from '@styles';
 
 const ChannelList = props => {
+  const {currentChannel} = props;
   return (
     <Box>
       <Text style={channelStyle.title}>{props.title}</Text>
       <FlatList
+        maxHeight={Dimensions.get('window').height - 300}
         data={props.channels}
         renderItem={({item}) => (
           <Channel
+            isCurrentChannel={currentChannel.url === item.url}
             key={item.url}
             channel={item}
             onPress={channel => props.switchChannel(channel)}

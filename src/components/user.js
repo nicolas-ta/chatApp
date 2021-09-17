@@ -47,7 +47,6 @@ const style = {
     paddingTop: 15,
     paddingBottom: 8,
     alignItems: 'center',
-    // borderRadius: 10,
   },
   profileImageContainer: {
     position: 'relative',

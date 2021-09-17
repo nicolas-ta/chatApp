@@ -1,8 +1,8 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-
 import {withAppContext} from '@src/context';
 
+/** Used from the desktop application by the admin */
 const AdminMessage = props => {
   const {message} = props;
   return (
@@ -14,6 +14,7 @@ const AdminMessage = props => {
   );
 };
 
+/** Style */
 const style = {
   container: {
     width: '100%',

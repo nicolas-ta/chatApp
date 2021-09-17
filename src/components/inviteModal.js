@@ -23,6 +23,7 @@ const InviteModal = props => {
     fetchUserList();
   }, [fetchUserList]);
 
+  /** Fetch the list of all users and filter to only show those non-invited yet */
   const fetchUserList = useCallback(() => {
     dispatch({type: 'start-loading'});
     // Retrieving all users
@@ -39,6 +40,7 @@ const InviteModal = props => {
         });
       } else {
         if (users) {
+          // Filter
           const clone = [...users];
           var filteredUsers = clone.filter(item => {
             return item.userId !== currentUser.userId && item.nickname !== '';
@@ -58,46 +60,54 @@ const InviteModal = props => {
     });
   }, [channel.members, currentUser.userId, isCreating, sendbird]);
 
+  /** Callback from the create channel function */
+  const handleCreateChannel = () => (err, newChannel) => {
+    if (!err) {
+      dispatch({type: 'reset-selection'});
+      props.onClose(newChannel);
+    } else {
+      dispatch({type: 'end-loading'});
+      dispatch({
+        type: 'error',
+        payload: {
+          error: err.message,
+        },
+      });
+    }
+  };
+
+  /** Create a private group channel */
   const createGroupChannel = () => {
     if (state.selectedUsers.length > 0) {
       dispatch({type: 'start-loading'});
       const params = new sendbird.GroupChannelParams();
       params.addUsers(state.selectedUsers);
       params.isDistinct = true;
-      sendbird.GroupChannel.createChannel(params, (err, channel) => {
-        if (!err) {
-          dispatch({type: 'reset-selection'});
-          props.onClose(channel);
-        } else {
-          dispatch({type: 'end-loading'});
-          dispatch({
-            type: 'error',
-            payload: {
-              error: err.message,
-            },
-          });
-        }
+      sendbird.GroupChannel.createChannel(params, handleCreateChannel);
+    }
+  };
+
+  /** Handle invite from channel.invite */
+  const handleInvite = (err, _) => {
+    if (!err) {
+      dispatch({type: 'reset-selection'});
+      props.onClose();
+    } else {
+      dispatch({
+        type: 'error',
+        payload: {
+          error: err.message,
+        },
       });
     }
   };
 
+  /** If already in a group channel, can invite other people */
   const invite = () => {
     if (state.selectedUsers.length > 0) {
       dispatch({type: 'start-loading'});
 
-      channel.invite(state.selectedUsers, (err, _) => {
-        if (!err) {
-          dispatch({type: 'reset-selection'});
-          props.onClose();
-        } else {
-          dispatch({
-            type: 'error',
-            payload: {
-              error: err.message,
-            },
-          });
-        }
-      });
+      channel.invite(state.selectedUsers, handleInvite);
     } else {
       dispatch({
         type: 'error',
@@ -108,6 +118,7 @@ const InviteModal = props => {
     }
   };
 
+  /** Select on deselect user if selectable */
   const onSelect = user => {
     if (!state.selectedUsers.includes(user)) {
       dispatch({type: 'select-user', payload: {user}});
@@ -115,6 +126,8 @@ const InviteModal = props => {
       dispatch({type: 'unselect-user', payload: {user}});
     }
   };
+
+  /** UI */
 
   const userList = (
     <FlatList

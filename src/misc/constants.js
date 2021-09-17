@@ -13,4 +13,5 @@ export const VALUE = {
   chatPanDuration: 300,
   errorFadeDuration: 200,
   errorDuration: 3500,
+  lastMessageEllipsis: 23,
 };

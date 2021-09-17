@@ -9,16 +9,16 @@ import {
   createUnreadMessageCount,
   ellipsis,
 } from '@misc/utils';
-
-const LAST_MESSAGE_ELLIPSIS = 23;
+import {COLOR, VALUE} from '@constants';
 
 const Channel = props => {
-  const {sendbird, channel, onPress} = props;
+  const {sendbird, channel, onPress, isCurrentChannel} = props;
   const [name, setName] = useState('');
   const [lastMessage, setLastMessage] = useState('');
   const [unreadMessageCount, setUnreadMessageCount] = useState('');
   const [updatedAt, setUpdatedAt] = useState('');
 
+  /** Channel handler */
   const channelHandler = useMemo(
     () => new sendbird.ChannelHandler(),
     [sendbird.ChannelHandler],
@@ -46,13 +46,19 @@ const Channel = props => {
     }
   };
 
-  const updateChannelName = newChan => {
-    setName(createChannelName(newChan));
+  /** Format a channel name based on its members
+   * @param newChannel the new channel created
+   */
+  const updateChannelName = newChannel => {
+    setName(createChannelName(newChannel));
   };
 
-  const updateLastMessage = newChan => {
-    if (newChan.lastMessage) {
-      const message = newChan.lastMessage;
+  /** Update the last message displayed on the channel
+   * @param newChannel the new channel created
+   */
+  const updateLastMessage = newChannel => {
+    if (newChannel.lastMessage) {
+      const message = newChannel.lastMessage;
       if (message.isUserMessage()) {
         setLastMessage(message.message);
       } else if (message.isFileMessage()) {
@@ -60,13 +66,23 @@ const Channel = props => {
       }
     }
   };
-  const updateUnreadMessageCount = newChan => {
-    setUnreadMessageCount(createUnreadMessageCount(newChan));
+
+  /** Update the unread message count
+   * @param newChannel the new channel created
+   */
+  const updateUnreadMessageCount = newChannel => {
+    setUnreadMessageCount(createUnreadMessageCount(newChannel));
   };
-  const updateUpdatedAt = newChan => {
+
+  /** Update the date
+   * @param newChannel the new channel created
+   */
+  const updateUpdatedAt = newChannel => {
     setUpdatedAt(
       moment(
-        newChan.lastMessage ? newChan.lastMessage.createdAt : newChan.createdAt,
+        newChannel.lastMessage
+          ? newChannel.lastMessage.createdAt
+          : newChannel.createdAt,
       ).fromNow(),
     );
   };
@@ -85,7 +101,10 @@ const Channel = props => {
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      style={channelStyle.channelContainer}
+      style={{
+        ...channelStyle.channelContainer,
+        backgroundColor: isCurrentChannel ? COLOR.blue : COLOR.darkerBlue,
+      }}
       onPress={() => onPress(channel)}>
       <Image
         source={
@@ -98,11 +117,11 @@ const Channel = props => {
       <Box style={channelStyle.contentContainer}>
         <Text style={channelStyle.name}>{name}</Text>
         <Text style={channelStyle.lastMessage}>
-          {ellipsis(lastMessage.replace(/\n/g, ' '), LAST_MESSAGE_ELLIPSIS)}
+          {ellipsis(lastMessage.replace(/\n/g, ' '), VALUE.lastMessageEllipsis)}
         </Text>
+        <Text style={channelStyle.updatedAt}>{updatedAt}</Text>
       </Box>
       <Box style={channelStyle.propertyContainer}>
-        <Text style={channelStyle.updatedAt}>{updatedAt}</Text>
         {channel.unreadMessageCount > 0 ? (
           <Box style={channelStyle.unreadMessageCountContainer}>
             <Text style={channelStyle.unreadMessageCount}>

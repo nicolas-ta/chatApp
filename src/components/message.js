@@ -1,7 +1,9 @@
 import React from 'react';
 import {withAppContext} from '@src/context';
-import {UserMessage, AdminMessage} from '@components';
+import UserMessage from '@components/userMessage';
+import AdminMessage from '@components/adminMessage';
 
+/** Choose between user and admin message depending on message.isUserMessage() */
 const Message = props => {
   const {message} = props;
   let component = null;

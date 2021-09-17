@@ -10,6 +10,7 @@ const Chat = props => {
   const [padding] = useState(new Animated.Value(0));
   const {route} = props;
   const [currentScreen, setCurrentScreen] = useState(1);
+
   /** Open the left panel showing the channels */
   const openMenu = () => {
     Keyboard.dismiss();
@@ -43,6 +44,7 @@ const Chat = props => {
     });
   };
 
+  /** UI */
   /** Define the left panel */
   const channelPanel = (
     <ChannelSelection
@@ -74,7 +76,11 @@ const Chat = props => {
 
   /** Define the right panel */
   const memberPanel = (
-    <MemberList {...props} isCurrentScreen={currentScreen === 2} />
+    <MemberList
+      {...props}
+      isCurrentScreen={currentScreen === 2}
+      resetPannel={reset}
+    />
   );
 
   /** Define the background, behind the chat view, and in front of the left or right panel
