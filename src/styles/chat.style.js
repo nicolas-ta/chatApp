@@ -32,6 +32,7 @@ export default StyleSheet.create({
   header: {
     borderRadius: 10,
     height: 70,
+    width: '100%',
     backgroundColor: COLOR.darkerBlue,
     opacity: 1,
     display: 'flex',
@@ -49,8 +50,9 @@ export default StyleSheet.create({
   },
   headerName: {
     color: 'white',
-    fontSize: 24,
-    marginTop: 12,
+    marginTop: 10,
+    maxWidth: Dimensions.get('window').width - 150,
+    fontSize: 20,
     fontWeight: '100',
   },
   middleBox: {

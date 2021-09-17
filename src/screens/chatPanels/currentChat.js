@@ -24,6 +24,7 @@ import {chatReducer} from '@reducers';
 import {Message} from '@components';
 import {withAppContext} from '@src/context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {createChannelName} from '@misc/utils';
 
 const CurrentChat = props => {
   const {route, sendbird, unreadChannel} = props;
@@ -214,7 +215,7 @@ const CurrentChat = props => {
         <HamburgerIcon color={COLOR.red} />
         {unreadChannel > 0 ? <Box style={chatStyle.badge} /> : undefined}
       </Button>
-      <Text style={chatStyle.headerName}>{channel.name}</Text>
+      <Text style={chatStyle.headerName}>{createChannelName(channel)}</Text>
       <Spacer />
       <Button
         variant="filled"
