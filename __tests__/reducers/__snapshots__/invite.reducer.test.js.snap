@@ -1,0 +1,159 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Invite reducer unit tests checking end-loading state 1`] = `
+Object {
+  "error": null,
+  "loading": false,
+}
+`;
+
+exports[`Invite reducer unit tests checking error state 1`] = `
+Object {
+  "error": undefined,
+}
+`;
+
+exports[`Invite reducer unit tests checking fetch-users empty state 1`] = `
+Object {
+  "channel": undefined,
+  "userMap": Object {
+    "test1": true,
+  },
+  "users": Array [
+    Object {
+      "userId": "test1",
+    },
+  ],
+}
+`;
+
+exports[`Invite reducer unit tests checking fetch-users state 1`] = `
+Object {
+  "channel": Object {
+    "members": Array [
+      Object {
+        "userId": "test1",
+      },
+    ],
+  },
+  "userMap": Object {
+    "test1": true,
+    "test2": true,
+  },
+  "users": Array [
+    Object {
+      "userId": "test1",
+    },
+    Object {
+      "userId": "test2",
+    },
+  ],
+}
+`;
+
+exports[`Invite reducer unit tests checking initial state 1`] = `undefined`;
+
+exports[`Invite reducer unit tests checking refresh state 1`] = `
+Object {
+  "error": "",
+  "loading": false,
+  "selectedUsers": Array [],
+  "userMap": Object {},
+  "users": Array [],
+}
+`;
+
+exports[`Invite reducer unit tests checking reset-selection state 1`] = `
+Object {
+  "loading": false,
+  "selectedUsers": Array [],
+}
+`;
+
+exports[`Invite reducer unit tests checking select-user empty state 1`] = `
+Object {
+  "error": "",
+  "selectedUsers": Array [
+    Object {
+      "userId": "test1",
+    },
+    Object {
+      "userId": "test2",
+    },
+    undefined,
+  ],
+}
+`;
+
+exports[`Invite reducer unit tests checking select-user not included state 1`] = `
+Object {
+  "error": "",
+  "selectedUsers": Array [
+    Object {
+      "userId": "test1",
+    },
+    Object {
+      "userId": "test2",
+    },
+    Object {
+      "userId": "test3",
+    },
+  ],
+}
+`;
+
+exports[`Invite reducer unit tests checking select-user state 1`] = `
+Object {
+  "error": "",
+  "selectedUsers": Array [
+    Object {
+      "userId": "test1",
+    },
+    Object {
+      "userId": "test2",
+    },
+  ],
+}
+`;
+
+exports[`Invite reducer unit tests checking start-loading state 1`] = `
+Object {
+  "error": null,
+  "loading": true,
+}
+`;
+
+exports[`Invite reducer unit tests checking unselect-user empty state 1`] = `
+Object {
+  "error": "",
+  "selectedUsers": Array [
+    Object {
+      "userId": "test1",
+    },
+    Object {
+      "userId": "test1",
+    },
+  ],
+}
+`;
+
+exports[`Invite reducer unit tests checking unselect-user included state 1`] = `
+Object {
+  "error": "",
+  "selectedUsers": Array [],
+}
+`;
+
+exports[`Invite reducer unit tests checking unselect-user not included state 1`] = `
+Object {
+  "error": "",
+  "selectedUsers": Array [
+    Object {
+      "userId": "test2",
+    },
+    Object {
+      "userId": "test3",
+    },
+  ],
+}
+`;

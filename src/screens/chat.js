@@ -1,101 +1,104 @@
-import React, {useState, useLayoutEffect} from 'react';
-import {Box, Button, Text, HamburgerIcon, Icon} from 'native-base';
-import {Animated, Platform} from 'react-native';
-import chatStyle from '../styles/chatStyle';
-import {COLOR} from '../misc/constants';
-// import {Ionicons} from '@expo/vector-icons';
+import React, {useState} from 'react';
+import {Box, Button} from 'native-base';
+import {Animated, Keyboard} from 'react-native';
+import {withAppContext} from '../context';
+import {VALUE} from '@constants';
+import {chatStyle} from '@styles';
+import {MemberList, CurrentChat, ChannelSelection} from '@screens';
 
 const Chat = props => {
-  const {navigation, sendbird} = props;
-  const [padding, setPadding] = useState(new Animated.Value(0));
+  const [padding] = useState(new Animated.Value(0));
+  const {route} = props;
   const [currentScreen, setCurrentScreen] = useState(1);
+  const [unreadChannel, setUnreadChannel] = useState(0);
 
+  /** Open the left panel showing the channels */
   const openMenu = () => {
+    Keyboard.dismiss();
     setCurrentScreen(0);
     Animated.timing(padding, {
-      toValue: 300,
-      duration: 300,
+      toValue: VALUE.chatPanOffset,
+      duration: VALUE.chatPanDuration,
       useNativeDriver: false,
     }).start();
   };
 
+  /** Open the right panel showing the connected members */
   const openOnlineMember = () => {
+    Keyboard.dismiss();
     setCurrentScreen(2);
     Animated.timing(padding, {
-      toValue: -300,
-      duration: 300,
+      toValue: -VALUE.chatPanOffset,
+      duration: VALUE.chatPanDuration,
       useNativeDriver: false,
     }).start();
   };
 
+  /** Return to the main chat screen */
   const reset = () => {
     Animated.timing(padding, {
       toValue: 0,
-      duration: 300,
+      duration: VALUE.chatPanDuration,
       useNativeDriver: false,
     }).start(() => {
       setCurrentScreen(1);
     });
   };
 
-  const leftBox = (
-    <Box style={[chatStyle.leftBox, {elevation: currentScreen == 0 ? 3 : 1}]} />
+  /** UI */
+  /** Define the left panel */
+  const channelPanel = (
+    <ChannelSelection
+      {...props}
+      isCurrentScreen={currentScreen === 0}
+      setUnreadChannel={setUnreadChannel}
+      goToChat={newChannel => {
+        reset();
+        route.params.channel = newChannel;
+      }}
+    />
   );
 
-  const middleBox = (
-    <Animated.View
-      // style={chatStyle.middleBox}
-      style={[chatStyle.middleBox, {marginLeft: padding}]}>
-      <Box style={chatStyle.header}>
-        <Button
-          variant="link"
-          style={chatStyle.headerButton}
-          onPress={openMenu}>
-          <HamburgerIcon color="white" />
-        </Button>
-        <Box style={{flex: 1}} />
-        <Button
-          variant="outline"
-          size="xs"
-          style={chatStyle.headerButton}
-          onPress={openOnlineMember}>
-          <Text color="white">Online (1)</Text>
-        </Button>
-      </Box>
-
-      {currentScreen != 1 ? (
-        <Button
-          onPress={reset}
-          style={{
-            backgroundColor: 'black',
-            opacity: 0.4,
-            height: '100%',
-            width: '100%',
-            position: 'absolute',
-          }}
-        />
-      ) : undefined}
+  /** Define the main chat view */
+  const currentChat = (
+    <Animated.View style={[chatStyle.middleBox, {marginLeft: padding}]}>
+      <CurrentChat
+        isCurrentScreen={currentScreen === 1}
+        {...props}
+        openMenu={openMenu}
+        unreadChannel={unreadChannel}
+        openOnlineMember={openOnlineMember}
+        overlay={
+          currentScreen !== 1 ? (
+            <Button onPress={reset} style={chatStyle.overlay} />
+          ) : undefined
+        }
+      />
     </Animated.View>
   );
 
-  const rightBox = (
-    <Box style={[chatStyle.rightBox, {elevation: currentScreen == 2 ? 3 : 1}]}>
-      <Text>Connected member</Text>
-    </Box>
+  /** Define the right panel */
+  const memberPanel = (
+    <MemberList
+      {...props}
+      isCurrentScreen={currentScreen === 2}
+      resetPannel={reset}
+    />
   );
 
-  const bg = <Box style={chatStyle.background}></Box>;
+  /** Define the background, behind the chat view, and in front of the left or right panel
+   * depending on the selected screen
+   */
+  const bg = <Box style={chatStyle.background} />;
 
   return (
     <Box>
-      <Box style={chatStyle.container}>
-        {bg}
-        {leftBox}
-        {rightBox}
-        {middleBox}
-      </Box>
+      {bg}
+      {channelPanel}
+      {currentScreen === 2 ? memberPanel : undefined}
+      {currentChat}
     </Box>
   );
 };
 
-export default Chat;
+export default withAppContext(Chat);

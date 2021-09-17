@@ -1,0 +1,163 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Member Reducer unit tests checking end-loading state 1`] = `
+Object {
+  "error": undefined,
+  "loading": false,
+}
+`;
+
+exports[`Member Reducer unit tests checking error state 1`] = `
+Object {
+  "error": undefined,
+}
+`;
+
+exports[`Member Reducer unit tests checking fetch-messages empty state 1`] = `Object {}`;
+
+exports[`Member Reducer unit tests checking fetch-messages state 1`] = `
+Object {
+  "empty": "",
+  "messageMap": Object {
+    "reqId1": true,
+  },
+  "messages": Array [
+    Object {
+      "hasSameSenderAbove": false,
+      "reqId": "reqId1",
+      "sender": Object {
+        "userId": "userId1",
+      },
+    },
+    Object {
+      "hasSameSenderAbove": false,
+      "reqId": "reqId2",
+      "sender": Object {
+        "userId": "userId2",
+      },
+    },
+    Object {
+      "hasSameSenderAbove": false,
+      "reqId": "reqId1",
+      "sender": Object {
+        "userId": "userId1",
+      },
+    },
+  ],
+}
+`;
+
+exports[`Member Reducer unit tests checking initial state 1`] = `undefined`;
+
+exports[`Member Reducer unit tests checking receive-message empty state 1`] = `
+Object {
+  "empty": "",
+  "input": undefined,
+  "messageMap": Object {},
+  "messages": Array [
+    undefined,
+  ],
+}
+`;
+
+exports[`Member Reducer unit tests checking receive-message state 1`] = `
+Object {
+  "empty": "",
+  "input": undefined,
+  "messageMap": Object {
+    "reqId1": true,
+  },
+  "messages": Array [
+    Object {
+      "hasSameSenderAbove": true,
+      "reqId": "reqId1",
+      "sender": Object {
+        "userId": "userId1",
+      },
+    },
+    Object {
+      "hasSameSenderAbove": true,
+      "reqId": "reqId1",
+      "sender": Object {
+        "userId": "userId1",
+      },
+    },
+    Object {
+      "hasSameSenderAbove": false,
+      "reqId": "reqId2",
+      "sender": Object {
+        "userId": "userId2",
+      },
+    },
+  ],
+}
+`;
+
+exports[`Member Reducer unit tests checking refresh state 1`] = `
+Object {
+  "error": null,
+  "loading": false,
+  "messageMap": Object {},
+  "messages": Array [],
+}
+`;
+
+exports[`Member Reducer unit tests checking send-message empty state 1`] = `
+Object {
+  "messageMap": Array [],
+  "messages": Array [],
+}
+`;
+
+exports[`Member Reducer unit tests checking send-message state 1`] = `
+Object {
+  "empty": "",
+  "input": "",
+  "messageMap": Object {
+    "mockMessage2": Object {
+      "hasSameSenderAbove": false,
+      "reqId": "reqId2",
+      "sender": Object {
+        "userId": "userId2",
+      },
+    },
+    "reqId1": true,
+  },
+  "messages": Array [
+    Object {
+      "hasSameSenderAbove": true,
+      "reqId": "reqId1",
+      "sender": Object {
+        "userId": "userId1",
+      },
+    },
+    Object {
+      "hasSameSenderAbove": true,
+      "reqId": "reqId1",
+      "sender": Object {
+        "userId": "userId1",
+      },
+    },
+    Object {
+      "hasSameSenderAbove": false,
+      "reqId": "reqId2",
+      "sender": Object {
+        "userId": "userId2",
+      },
+    },
+  ],
+}
+`;
+
+exports[`Member Reducer unit tests checking start-loading state 1`] = `
+Object {
+  "error": "",
+  "loading": true,
+}
+`;
+
+exports[`Member Reducer unit tests checking typing state 1`] = `
+Object {
+  "input": undefined,
+}
+`;
